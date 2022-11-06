@@ -1,0 +1,8 @@
+$roboto: 'Roboto', sans-serif;
+
+@mixin line-clamp($rows: 1) {
+    -webkit-line-clamp: $rows;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
