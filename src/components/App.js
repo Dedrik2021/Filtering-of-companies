@@ -8,8 +8,7 @@ import {
 	fetchData,
 	fetchDataFilter,
 	fetchDataLength,
-	setActiveBtn,
-	fetchField,
+	setActiveBtn
 } from '../redux/slices/dataSlice';
 
 import '../scss/style.scss';
@@ -20,9 +19,7 @@ const App = () => {
 	const [page, setPage] = useState(40);
 	const [disabledAllDataBtn, setDisabledAllDataBtn] = useState(false);
 	const [disabledBtn, setDisabledBtn] = useState(false);
-	const { dataStatus, length, fields } = useSelector((state) => state.firmsData);
-
-	// console.log(fields.winstrom.adresar);
+	const { dataStatus, length } = useSelector((state) => state.firmsData);
 
 	useEffect(() => {
 		if (isNaN(length)) {
@@ -36,7 +33,6 @@ const App = () => {
 		dispatch(fetchData({ length: 20, psc: '' }));
 		dispatch(fetchDataFilter({ length: 20, psc: '' }));
 		dispatch(fetchDataLength());
-		dispatch(fetchField());
 	}, [length]);
 
 	const handlePageClick = () => {

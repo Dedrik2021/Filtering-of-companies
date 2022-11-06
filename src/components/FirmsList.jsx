@@ -41,9 +41,6 @@ const FirmsList = (props) => {
 		}
 	};
 
-	console.log(dataStatus);
-	console.log(dataFilterStatus);
-
 	const dataLoaded = () => {
 		if (dataStatus === 'success' && dataFilterStatus === 'success') {
 			return <FirmsItems stylePsc={stylePsc} />;
@@ -78,6 +75,7 @@ const FirmsList = (props) => {
 				disabledBtn={disabledBtn}
 				disabledAllDataBtn={disabledAllDataBtn}
 			/>
+			{/* <FirmsItems stylePsc={stylePsc} />; */}
 			{dataLoaded()}
 		</section>
 	);

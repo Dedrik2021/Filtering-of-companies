@@ -5,16 +5,31 @@ import DropDown from './Dropdown';
 import { fetchData, setActiveBtn, fetchDataFilter } from '../redux/slices/dataSlice';
 
 const Filter = (props) => {
-    const {
-        styleBtn, 
-        setDisabledBtn, 
-        setDisabledAllDataBtn, 
-        disabledBtn, 
-        disabledAllDataBtn
-    } = props
+	const { styleBtn, setDisabledBtn, setDisabledAllDataBtn, disabledBtn, disabledAllDataBtn } =
+		props;
 	const dispatch = useDispatch();
 	const [btn, setBtn] = useState(false);
-	const { dataFilterStatus, length, dataFilter, activeBtn } = useSelector((state) => state.firmsData);
+	const { dataFilterStatus, length, dataFilter, activeBtn } = useSelector(
+		(state) => state.firmsData,
+	);
+
+	const numbers = dataFilter.map((item) => item.psc).sort();
+    const uniqueNumbers = [...new Set(numbers)]
+    const numbersSpace = uniqueNumbers.map(item => item.replace(/\s+/g,''))
+    const numbersLength = numbersSpace.map(item => item.substr(0, 5))
+    const numbersString = numbersLength.map(item => item.replace(/[^0-9]/g, ''))
+
+	const numbersWithGroups = numbersString.map((num, i) => ({number: {id: i, psc: num}, group: + num.toString()[1] }));
+
+	const result = [];
+	numbersWithGroups.forEach(({ number, group }) => {
+		const existingGroupIndex = result.findIndex((resultItem) => resultItem.group === group);
+		if (existingGroupIndex === -1) {
+			result.push({ group, numbers: [number] });
+		} else {
+			result[existingGroupIndex].numbers.push(number);
+		}
+	});
 
 	const filterBbtns = [
 		{
@@ -112,7 +127,9 @@ const Filter = (props) => {
 	return (
 		<div className="filter">
 			<h3 className="filter__title">Filter: PSČ</h3>
-			<div className={`filter__inner ${disabledAllDataBtn ? '' :  disabledBtn ? 'active' : ''}`}>
+			<div
+				className={`filter__inner ${disabledAllDataBtn ? '' : disabledBtn ? 'active' : ''}`}
+			>
 				<ul className="filter-list">
 					{filterBbtns.map(({ id, name }) => {
 						return (
@@ -131,16 +148,15 @@ const Filter = (props) => {
 									{name}
 								</button>
 
-                                <DropDown 
-                                    dataFilter={dataFilter} 
-                                    btn={btn} 
-                                    onActiveBtn2={onActiveBtn2} 
-                                    stylePsc={stylePsc} 
-                                    setBtn={setBtn} 
-                                    dataFilterStatus={dataFilterStatus} 
-
-                                />
-
+								<DropDown
+									btn={btn}
+									onActiveBtn2={onActiveBtn2}
+									stylePsc={stylePsc}
+									setBtn={setBtn}
+									dataFilterStatus={dataFilterStatus}
+                                    result={result}
+                                    activeBtn={activeBtn}
+								/>
 							</li>
 						);
 					})}

@@ -88,11 +88,42 @@
 
 .dropdown {
     overflow: auto;
-    height: 250px;
+    height: 300px;
 
     &.active {
         position: relative;
         opacity: 1;
         visibility: visible;
+    }
+
+    &__group {
+        display: block;
+        padding: 5px 0 10px;
+        font-weight: 800;
+    }
+}
+
+.btn {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 5px 0;
+    color: #fff;
+    background-color: transparent;
+    border: none;
+
+    &:not(:last-child) {
+        margin-bottom: 3px;
+    }
+
+    &.active,
+    &:hover {
+        opacity: 0.5;
+    }
+
+    &.active {
+        border-radius: 5px;
+        pointer-events: none;
     }
 }

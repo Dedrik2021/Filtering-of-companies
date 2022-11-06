@@ -17,11 +17,6 @@ export const fetchDataLength = createAsyncThunk('fetchDataLength/fetchDataStatus
 	return await response.json();
 });
 
-export const fetchField = createAsyncThunk('fetchField/fetchDataStatus', async () => {
-	const response = await fetch(`https://demo.flexibee.eu/v2/c/demo/adresar.json?detail=custom:psc`);
-	return await response.json();
-});
-
 const initialState = {
     data: [],
     dataFilter: [],
@@ -32,8 +27,6 @@ const initialState = {
 	dataStatus: 'loading',
 	dataFilterStatus: 'loading',
     activeBtn: '',
-
-    fields: []
 };
 
 const dataSlice = createSlice({
@@ -90,16 +83,6 @@ const dataSlice = createSlice({
         });
         builder.addCase(fetchDataLength.rejected, (state) => {
 			state.dataLength = [];
-        });
-
-		builder.addCase(fetchField.pending, (state) => {
-			state.fields = [];
-		});
-        builder.addCase(fetchField.fulfilled, (state, action) => {
-			state.fields = action.payload;
-        });
-        builder.addCase(fetchField.rejected, (state) => {
-			state.fields = [];
         });
 	},
 });

@@ -5,7 +5,10 @@ import { getData, getDataFilter, getLength } from '../redux/slices/dataSlice';
 
 const FirmsItems = ({stylePsc}) => {
 	const dispatch = useDispatch();
-	const { data, allData, allDataFilter, dataLength, fields } = useSelector((state) => state.firmsData);
+	const { data, allData, allDataFilter, dataLength } = useSelector((state) => state.firmsData);
+	const numbersSpace = data.map(item => item.psc.replace(/\s+/g,''))
+	const numbersLength = numbersSpace.map(item => item.substr(0, 5))
+	const pscs = numbersLength.map(item => item.replace(/[^0-9]/g, ''))
 
 	let result = [];
 	for (let i in dataLength.winstrom) {
@@ -15,7 +18,7 @@ const FirmsItems = ({stylePsc}) => {
 	}
 
 	useEffect(() => {
-		dispatch(getData(allData.winstrom.adresar));
+		dispatch(getData(allData.winstrom !== undefined && allData.winstrom.adresar));
 		dispatch(getDataFilter(allDataFilter.winstrom !== undefined && allDataFilter.winstrom.adresar));
         dispatch(getLength(Number(result[1])))
 	}, []);
@@ -39,8 +42,7 @@ const FirmsItems = ({stylePsc}) => {
 				</ul>
 				<div className="firms-items__list">
 					<ul className="list">
-						{data &&
-							data.map((item, i) => {
+						{data.map((item, i) => {
 								return (
 									<li className="list__item list__item--length" key={item.id}>
 										{i + 1}
@@ -49,30 +51,30 @@ const FirmsItems = ({stylePsc}) => {
 							})}
 					</ul>
 					<ul className="list">
-						{data.map((item) => {
+						{data.map(({id, nazev}) => {
 							return (
-								<li className="list__item" key={item.id} >
-									{item.nazev !== '' ? item.nazev : '-- -- --'}
+								<li className="list__item" key={id} >
+									{nazev}
 								</li>
 							);
 						})}
 					</ul>
 					<ul className="list" >
-						{data.map((item) => {
+						{data.map(({id, ulice}) => {
 							return (
 								<li 
-									className="list__item" key={item.id}
+									className="list__item" key={id}
 									>
-									{item.ulice !== '' ? item.ulice : '-- -- -- '}
+									{ulice !== '' ? ulice : '-- -- --'}
 								</li>
 							);
 						})}
 					</ul>
 					<ul className="list">
-						{data.map((item) => {
+						{pscs.map((psc, i) => {
 							return (
-								<li className="list__item" key={item.id} style={{backgroundColor: stylePsc(item.psc), color: item.psc !== '' ? 'white' : 'black', borderColor: 'white'}}>
-									{item.psc !== '' ? item.psc : '-- -- --'}
+								<li className="list__item" key={i} style={{backgroundColor: stylePsc(psc), color: psc !== '' ? 'white' : 'black', borderColor: 'white'}}>
+									{psc !== '' ? psc : 'xxx xx'}
 								</li>
 							);
 						})}
