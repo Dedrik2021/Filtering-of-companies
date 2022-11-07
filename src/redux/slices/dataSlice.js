@@ -12,6 +12,11 @@ export const fetchDataFilter = createAsyncThunk('fetchDataFilter/fetchDataStatus
 	return await response.json();
 });
 
+export const fetchDataOthers = createAsyncThunk('fetchDataOthers/fetchDataStatus', async (length) => {
+	const response = await fetch(`https://demo.flexibee.eu/v2/c/demo/adresar.json?limit=${length}&start=0`);
+	return await response.json();
+});
+
 export const fetchDataLength = createAsyncThunk('fetchDataLength/fetchDataStatus', async () => {
 	const response = await fetch(`https://demo.flexibee.eu/v2/c/demo/adresar.json?add-row-count=true`);
 	return await response.json();
@@ -19,14 +24,17 @@ export const fetchDataLength = createAsyncThunk('fetchDataLength/fetchDataStatus
 
 const initialState = {
     data: [],
+    dataOthers: [],
     dataFilter: [],
     allData: [],
     allDataFilter: [],
     dataLength: [],
     length: 0,
+    activeBtn: '',
+    othersBtn: false,
 	dataStatus: 'loading',
 	dataFilterStatus: 'loading',
-    activeBtn: '',
+	dataOthersStatus: 'loading',
 };
 
 const dataSlice = createSlice({
@@ -44,11 +52,13 @@ const dataSlice = createSlice({
         },
         setActiveBtn(state, action) {
             state.activeBtn = action.payload
+        },
+        setOthersBtn(state, action) {
+            state.othersBtn = action.payload
         }
     },
 
 	extraReducers: (builder) => {
-
 		builder.addCase(fetchData.pending, (state) => {
             state.dataStatus = 'loading';
 			state.allData = [];
@@ -84,6 +94,19 @@ const dataSlice = createSlice({
         builder.addCase(fetchDataLength.rejected, (state) => {
 			state.dataLength = [];
         });
+
+		builder.addCase(fetchDataOthers.pending, (state) => {
+			state.dataOthers = [];
+            state.dataOthersStatus = 'loading'
+		});
+        builder.addCase(fetchDataOthers.fulfilled, (state, action) => {
+            state.dataOthers = action.payload;
+            state.dataOthersStatus = 'success'
+        });
+        builder.addCase(fetchDataOthers.rejected, (state) => {
+			state.dataOthers = [];
+            state.dataOthersStatus = 'error'
+        });
 	},
 });
 
@@ -91,7 +114,8 @@ export const {
     getData,
     getDataFilter,
     getLength,
-    setActiveBtn
+    setActiveBtn,
+    setOthersBtn
 } = dataSlice.actions
 
 export default dataSlice.reducer;

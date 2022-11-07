@@ -37,7 +37,7 @@ const FirmsList = (props) => {
 			case '9':
 				return 'goldenrod';
 			default:
-				return 'antiquewhite';
+				return 'tomato';
 		}
 	};
 
@@ -75,7 +75,6 @@ const FirmsList = (props) => {
 				disabledBtn={disabledBtn}
 				disabledAllDataBtn={disabledAllDataBtn}
 			/>
-			{/* <FirmsItems stylePsc={stylePsc} />; */}
 			{dataLoaded()}
 		</section>
 	);

@@ -6,9 +6,7 @@ import { getData, getDataFilter, getLength } from '../redux/slices/dataSlice';
 const FirmsItems = ({stylePsc}) => {
 	const dispatch = useDispatch();
 	const { data, allData, allDataFilter, dataLength } = useSelector((state) => state.firmsData);
-	const numbersSpace = data.map(item => item.psc.replace(/\s+/g,''))
-	const numbersLength = numbersSpace.map(item => item.substr(0, 5))
-	const pscs = numbersLength.map(item => item.replace(/[^0-9]/g, ''))
+	const pscs = data.map(item => item.psc.replace(/\s+/g,''))
 
 	let result = [];
 	for (let i in dataLength.winstrom) {

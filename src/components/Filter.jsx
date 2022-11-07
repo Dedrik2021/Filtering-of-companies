@@ -2,24 +2,34 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import DropDown from './Dropdown';
-import { fetchData, setActiveBtn, fetchDataFilter } from '../redux/slices/dataSlice';
+import OthersDropdown from './OthersDropdown';
+import { fetchData, setActiveBtn, fetchDataFilter, setOthersBtn } from '../redux/slices/dataSlice';
 
 const Filter = (props) => {
-	const { styleBtn, setDisabledBtn, setDisabledAllDataBtn, disabledBtn, disabledAllDataBtn } =
+	const { styleBtn, setDisabledBtn, setDisabledAllDataBtn, disabledBtn, disabledAllDataBtn, dataOthersStatus } =
 		props;
 	const dispatch = useDispatch();
 	const [btn, setBtn] = useState(false);
-	const { dataFilterStatus, length, dataFilter, activeBtn } = useSelector(
+	const { dataFilterStatus, length, dataFilter, activeBtn, dataOthers, othersBtn } = useSelector(
 		(state) => state.firmsData,
 	);
 
-	const numbers = dataFilter.map((item) => item.psc).sort();
-    const uniqueNumbers = [...new Set(numbers)]
-    const numbersSpace = uniqueNumbers.map(item => item.replace(/\s+/g,''))
-    const numbersLength = numbersSpace.map(item => item.substr(0, 5))
-    const numbersString = numbersLength.map(item => item.replace(/[^0-9]/g, ''))
+	const othersData = dataOthers.winstrom !== undefined ? dataOthers.winstrom.adresar : []
+	const numbrs = othersData.map((item) => item.psc).sort();
+	const uniNumbers = [...new Set(numbrs)];
+	const numbrsSpace = uniNumbers.map((item) => item.replace(/\s+/g, ''));
+	const pscOthers = numbrsSpace.filter((item) => item.length > 5);
 
-	const numbersWithGroups = numbersString.map((num, i) => ({number: {id: i, psc: num}, group: + num.toString()[1] }));
+	const numbers = dataFilter.map((item) => item.psc).sort();
+	const uniqueNumbers = [...new Set(numbers)];
+	const numbersSpace = uniqueNumbers.map((item) => item.replace(/\s+/g, ''));
+	const numbersLength = numbersSpace.filter((item) => item.length === 5);
+	const numbersString = numbersLength.map((item) => item.replace(/[^0-9]/g, ''));
+
+	const numbersWithGroups = numbersString.map((num, i) => ({
+		number: { id: i, psc: num },
+		group: +num.toString()[1],
+	}));
 
 	const result = [];
 	numbersWithGroups.forEach(({ number, group }) => {
@@ -80,6 +90,7 @@ const Filter = (props) => {
 		dispatch(fetchDataFilter({ length, psc: id }));
 		setDisabledBtn(true);
 		setDisabledAllDataBtn(false);
+		dispatch(setOthersBtn(false));
 	};
 
 	const onActiveBtn2 = (id) => {
@@ -88,7 +99,14 @@ const Filter = (props) => {
 		setBtn(id[1]);
 	};
 
+	const onOthersBtn = () => {
+		setDisabledBtn(true);
+		dispatch(setOthersBtn(true));
+		dispatch(setActiveBtn(''));
+	};
+
 	const onResetBtn = () => {
+		dispatch(setOthersBtn(false));
 		dispatch(setActiveBtn(''));
 		setBtn('');
 		setDisabledBtn(false);
@@ -120,7 +138,7 @@ const Filter = (props) => {
 			case '9':
 				return 'goldenrod';
 			default:
-				return 'antiquewhite';
+				return 'tomato';
 		}
 	};
 
@@ -128,7 +146,7 @@ const Filter = (props) => {
 		<div className="filter">
 			<h3 className="filter__title">Filter: PSČ</h3>
 			<div
-				className={`filter__inner ${disabledAllDataBtn ? '' : disabledBtn ? 'active' : ''}`}
+				className={`filter__inner ${disabledAllDataBtn ? othersBtn ? 'active' : '' : disabledBtn ? 'active' : ''}`}
 			>
 				<ul className="filter-list">
 					{filterBbtns.map(({ id, name }) => {
@@ -154,14 +172,22 @@ const Filter = (props) => {
 									stylePsc={stylePsc}
 									setBtn={setBtn}
 									dataFilterStatus={dataFilterStatus}
-                                    result={result}
-                                    activeBtn={activeBtn}
+									result={result}
+									activeBtn={activeBtn}
 								/>
 							</li>
 						);
 					})}
 				</ul>
-
+				<OthersDropdown
+					disabledAllDataBtn={disabledAllDataBtn} 
+					othersBtn={othersBtn} 
+					onOthersBtn={onOthersBtn} 
+					pscOthers={pscOthers} 
+					btn={btn} 
+					onActiveBtn2={onActiveBtn2} 
+					setBtn={setBtn} dataOthersStatus={dataOthersStatus}
+				/>
 				<button
 					className={`filter-list__btn filter-list__btn--reset ${
 						disabledBtn ? '' : 'active'

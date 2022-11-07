@@ -31,15 +31,6 @@ const Dropdown = memo((props) => {
                     </li>
                 )
             })}
-			<li className="dropdown__item">
-				<button
-					className="dropdown__btn"
-					type="button"
-					style={{ backgroundColor: 'aqua', color: 'black' }}
-				>
-					Others
-				</button>
-			</li>
 		</ul>
 	);
 })

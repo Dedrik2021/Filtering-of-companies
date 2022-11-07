@@ -3,7 +3,6 @@
     width: 100%;
     text-align: center;
     position: fixed;
-    top: 20%;
     border: 1px solid black;
     padding: 0 5px 10px;
 
@@ -13,7 +12,7 @@
     }
 
     &__inner {
-        height: 460px;
+        height: 510px;
         transition: height 0.5s ease-in-out, overflow 0.5s ease-in-out;
 
         &.active {
@@ -23,6 +22,15 @@
     }
 }
 
+.filter-list {
+
+    &__item:last-child {
+        margin-bottom: 5px;
+        border-bottom: 1px solid black;
+    }
+}
+
+.dropdown-others,
 .dropdown {
     visibility: hidden;
     opacity: 0;
@@ -30,12 +38,12 @@
     border-radius: 5px;
     padding: 0 15px;
     margin-top: 10px;
+    transition: height 0.5s ease-in-out, overflow 0.5s ease-in-out;
 }
 
-.dropdown2,
+.dropdown-others,
 .dropdown,
 .filter-list {
-
 
     &__item {
         border-top: 1px solid black;
@@ -86,6 +94,8 @@
     }
 }
 
+// .filter__box,
+.dropdown-others,
 .dropdown {
     overflow: auto;
     height: 300px;
@@ -103,6 +113,8 @@
     }
 }
 
+.dropdown-others__btn,
+.filter__btn,
 .btn {
     display: flex;
     width: 100%;
@@ -127,3 +139,4 @@
         pointer-events: none;
     }
 }
+

@@ -8,7 +8,9 @@ import {
 	fetchData,
 	fetchDataFilter,
 	fetchDataLength,
-	setActiveBtn
+	setActiveBtn,
+	fetchDataOthers,
+	setOthersBtn
 } from '../redux/slices/dataSlice';
 
 import '../scss/style.scss';
@@ -32,6 +34,7 @@ const App = () => {
 
 		dispatch(fetchData({ length: 20, psc: '' }));
 		dispatch(fetchDataFilter({ length: 20, psc: '' }));
+		dispatch(fetchDataOthers(length))
 		dispatch(fetchDataLength());
 	}, [length]);
 
@@ -52,6 +55,7 @@ const App = () => {
 		setDisabledBtn(true);
 		setDisabledAllDataBtn(true);
 		dispatch(setActiveBtn(''));
+		dispatch(setOthersBtn(false))
 		window.scrollTo(0, 0);
 	};
 
