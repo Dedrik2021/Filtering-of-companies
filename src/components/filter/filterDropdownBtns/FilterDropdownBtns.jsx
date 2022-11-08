@@ -24,7 +24,7 @@ const DropdownBtns = memo((props) => {
                                 <button 
                                     className={`btn ${btn === id ? 'active' : ''}`}
                                     onClick={() => (onDropdownBtnClick(psc[0] + psc[1] + psc[2]), setBtn(id))}
-                                    style={{ backgroundColor: stylePsc(psc) }}
+                                    style={{ backgroundColor: stylePsc(psc[1]) }}
 							        type="button" key={id}>
                                     {dataFilterStatus === 'loading' ? 'xxx xx' : psc}
                                 </button>

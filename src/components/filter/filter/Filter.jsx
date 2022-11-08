@@ -9,7 +9,7 @@ import { setActiveBtn, setOthersBtn } from '../../../redux/slices/firmsDataSlice
 import './filter.scss'
 
 const Filter = (props) => {
-	const { styleBtn, setDisabledBtn, setDisabledAllDataBtn, disabledBtn, disabledAllDataBtn, dataOthersStatus } = props;
+	const { stylePsc, setDisabledBtn, setDisabledAllDataBtn, disabledBtn, disabledAllDataBtn, dataOthersStatus } = props;
 	const dispatch = useDispatch();
 	const [btn, setBtn] = useState(false);
 	const [othersDataBtns, setOthersDataBtns] = useState([])
@@ -121,33 +121,6 @@ const Filter = (props) => {
 		dispatch(fetchDataFilter({ length: 20, psc: '' }));
 	};
 
-	const stylePsc = (psc) => {
-		switch (psc[1]) {
-			case '0':
-				return 'red';
-			case '1':
-				return 'black';
-			case '2':
-				return 'darkmagenta';
-			case '3':
-				return 'brown';
-			case '4':
-				return 'blue';
-			case '5':
-				return 'darkgreen';
-			case '6':
-				return 'chocolate';
-			case '7':
-				return 'darkgoldenrod';
-			case '8':
-				return 'darkred';
-			case '9':
-				return 'goldenrod';
-			default:
-				return 'tomato';
-		}
-	};
-
 	return (
 		<div className="filter">
 			<h3 className="filter__title">Filter: PSČ</h3>
@@ -166,7 +139,7 @@ const Filter = (props) => {
 										activeBtn === id ? 'active' : ''
 									}`}
 									type="button"
-									style={{ backgroundColor: styleBtn(name) }}
+									style={{ backgroundColor: stylePsc(name[0]) }}
 									onClick={() => onFilterBtnClick(id)}
 								>
 									{name}

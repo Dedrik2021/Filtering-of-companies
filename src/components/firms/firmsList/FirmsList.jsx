@@ -8,11 +8,11 @@ const FirmsList = (props) => {
 		setDisabledBtn, 
 		setDisabledAllDataBtn, 
 		disabledBtn, 
-		disabledAllDataBtn 
+		disabledAllDataBtn
 	} = props;
 
 	const stylePsc = (psc) => {
-		switch (psc[0]) {
+		switch (psc) {
 			case '0':
 				return 'red';
 			case '1':
@@ -41,7 +41,7 @@ const FirmsList = (props) => {
 	return (
 		<section className="firms">
 			<Filter
-				styleBtn={stylePsc}
+				stylePsc={stylePsc}
 				setDisabledBtn={setDisabledBtn}
 				setDisabledAllDataBtn={setDisabledAllDataBtn}
 				disabledBtn={disabledBtn}

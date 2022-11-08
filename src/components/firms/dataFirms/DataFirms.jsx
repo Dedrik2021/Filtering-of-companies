@@ -61,7 +61,7 @@ const DataFirms = ({ stylePsc }) => {
 							className="list__item"
 							key={i}
 							style={{
-								backgroundColor: stylePsc(psc),
+								backgroundColor: stylePsc(psc[0]),
 								color: psc !== '' ? 'white' : 'black',
 								borderColor: 'white',
 							}}
