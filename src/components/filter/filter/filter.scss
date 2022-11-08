@@ -30,19 +30,6 @@
     }
 }
 
-.dropdown-others,
-.dropdown {
-    visibility: hidden;
-    opacity: 0;
-    position: absolute;
-    border-radius: 5px;
-    padding: 0 15px;
-    margin-top: 10px;
-    transition: height 0.5s ease-in-out, overflow 0.5s ease-in-out;
-}
-
-.dropdown-others,
-.dropdown,
 .filter-list {
 
     &__item {
@@ -74,7 +61,7 @@
             pointer-events: none;
             border-radius: 5px;
 
-            &+.dropdown {
+            &+.filter-dropdown-btns {
                 position: relative;
                 opacity: 1;
                 visibility: visible;
@@ -94,26 +81,6 @@
     }
 }
 
-// .filter__box,
-.dropdown-others,
-.dropdown {
-    overflow: auto;
-    height: 300px;
-
-    &.active {
-        position: relative;
-        opacity: 1;
-        visibility: visible;
-    }
-
-    &__group {
-        display: block;
-        padding: 5px 0 10px;
-        font-weight: 800;
-    }
-}
-
-.dropdown-others__btn,
 .filter__btn,
 .btn {
     display: flex;

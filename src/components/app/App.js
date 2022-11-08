@@ -2,18 +2,22 @@ import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
-import FirmsList from './FirmsList';
-import ShowMoreBtns from './ShowMoreBtns';
+import FirmsList from '../firms/firmsList/FirmsList';
+import ShowMoreBtns from '../showMoreBtns/ShowMoreBtns';
 import {
 	fetchData,
 	fetchDataFilter,
 	fetchDataLength,
-	setActiveBtn,
 	fetchDataOthers,
-	setOthersBtn
-} from '../redux/slices/dataSlice';
+} from '../../redux/thunks/fetchThunk';
 
-import '../scss/style.scss';
+import {
+	setActiveBtn,
+	setOthersBtn
+} from '../../redux/slices/firmsDataSlice'
+
+import './app.scss';
+import '../../scss/style.scss'
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -21,7 +25,7 @@ const App = () => {
 	const [page, setPage] = useState(40);
 	const [disabledAllDataBtn, setDisabledAllDataBtn] = useState(false);
 	const [disabledBtn, setDisabledBtn] = useState(false);
-	const { dataStatus, length } = useSelector((state) => state.firmsData);
+	const { dataStatus, length, dataOthersStatus } = useSelector((state) => state.firmsData);
 
 	useEffect(() => {
 		if (isNaN(length)) {

@@ -1,21 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import DropDown from './Dropdown';
-import OthersDropdown from './OthersDropdown';
-import { fetchData, setActiveBtn, fetchDataFilter, setOthersBtn } from '../redux/slices/dataSlice';
+import DropdownBtns from '../filterDropdownBtns/FilterDropdownBtns';
+import OthersDropdownBtns from '../filterDropdownOthersBtns/FilterDropdownOthersBtns';
+import { fetchData, fetchDataFilter} from '../../../redux/thunks/fetchThunk';
+import { setActiveBtn, setOthersBtn } from '../../../redux/slices/firmsDataSlice';
+
+import './filter.scss'
 
 const Filter = (props) => {
-	const { styleBtn, setDisabledBtn, setDisabledAllDataBtn, disabledBtn, disabledAllDataBtn, dataOthersStatus } =
-		props;
+	const { styleBtn, setDisabledBtn, setDisabledAllDataBtn, disabledBtn, disabledAllDataBtn, dataOthersStatus } = props;
 	const dispatch = useDispatch();
 	const [btn, setBtn] = useState(false);
-	const { dataFilterStatus, length, dataFilter, activeBtn, dataOthers, othersBtn } = useSelector(
+	const [othersDataBtns, setOthersDataBtns] = useState([])
+	const { dataFilterStatus, length, dataFilter, activeBtn, dataOthersBtns, othersBtn } = useSelector(
 		(state) => state.firmsData,
 	);
 
-	const othersData = dataOthers.winstrom !== undefined ? dataOthers.winstrom.adresar : []
-	const numbrs = othersData.map((item) => item.psc).sort();
+	useEffect(() => {
+		setOthersDataBtns(dataOthersBtns.winstrom !== undefined ? dataOthersBtns.winstrom.adresar : [])
+	}, [dataOthersBtns])
+
+	// const othersDataBtns = dataOthersBtns.winstrom !== undefined ? dataOthersBtns.winstrom.adresar : []
+	const numbrs = othersDataBtns && othersDataBtns.map((item) => item.psc).sort();
 	const uniNumbers = [...new Set(numbrs)];
 	const numbrsSpace = uniNumbers.map((item) => item.replace(/\s+/g, ''));
 	const pscOthers = numbrsSpace.filter((item) => item.length > 5);
@@ -166,7 +173,7 @@ const Filter = (props) => {
 									{name}
 								</button>
 
-								<DropDown
+								<DropdownBtns
 									btn={btn}
 									onActiveBtn2={onActiveBtn2}
 									stylePsc={stylePsc}
@@ -179,7 +186,7 @@ const Filter = (props) => {
 						);
 					})}
 				</ul>
-				<OthersDropdown
+				<OthersDropdownBtns
 					disabledAllDataBtn={disabledAllDataBtn} 
 					othersBtn={othersBtn} 
 					onOthersBtn={onOthersBtn} 

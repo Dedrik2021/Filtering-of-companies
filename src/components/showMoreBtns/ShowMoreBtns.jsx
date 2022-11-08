@@ -1,5 +1,7 @@
 import { memo } from "react";
 
+import './showMoreBtns.scss'
+
 const ShowMoreBtns = memo((props) => {
     const {disabledBtn, scrollRef, handlePageClick, onShowAllAddress, disabledAllDataBtn} = props
 

@@ -1,4 +1,7 @@
+@import '../../../scss/_vars.scss';
+
 .firms-items {
+    
     &__list {
         display: grid;
         grid-template-columns: 0.2fr 1fr 1fr 1fr;

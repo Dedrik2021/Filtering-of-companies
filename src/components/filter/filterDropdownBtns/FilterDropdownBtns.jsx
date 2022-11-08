@@ -1,6 +1,8 @@
 import { memo } from "react";
 
-const Dropdown = memo((props) => {
+import './filterDropdownBtns.scss'
+
+const DropdownBtns = memo((props) => {
 	const { 
         btn, 
         onActiveBtn2, 
@@ -12,11 +14,11 @@ const Dropdown = memo((props) => {
     } = props;
 
 	return (
-		<ul className="dropdown">
+		<ul className="filter-dropdown-btns">
             {result.map(({group, numbers}) => {
                 return (
-                    <li className="dropdown__item" key={group}>
-                        <span className="dropdown__group">{`${activeBtn}${group}x xx`}</span>
+                    <li className="filter-dropdown-btns__item" key={group}>
+                        <span className="filter-dropdown-btns__group">{`${activeBtn}${group}x xx`}</span>
                         {numbers.map(({id, psc}) => {
                             return (
                                 <button 
@@ -35,4 +37,4 @@ const Dropdown = memo((props) => {
 	);
 })
 
-export default Dropdown;
+export default DropdownBtns;

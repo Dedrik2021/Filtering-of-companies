@@ -1,33 +1,18 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-export const fetchData = createAsyncThunk('fetchData/fetchDataStatus', async (params) => {
-    const {length, psc} = params
-	const response = await fetch(`https://demo.flexibee.eu/v2/c/demo/adresar/(psc%20begins%20%27${psc}%27).json?limit=${length}&start=0`);
-	return await response.json();
-});
-
-export const fetchDataFilter = createAsyncThunk('fetchDataFilter/fetchDataStatus', async (params) => {
-    const {length, psc} = params
-	const response = await fetch(`https://demo.flexibee.eu/v2/c/demo/adresar/(psc%20begins%20%27${psc}%27).json?limit=${length}&start=0`);
-	return await response.json();
-});
-
-export const fetchDataOthers = createAsyncThunk('fetchDataOthers/fetchDataStatus', async (length) => {
-	const response = await fetch(`https://demo.flexibee.eu/v2/c/demo/adresar.json?limit=${length}&start=0`);
-	return await response.json();
-});
-
-export const fetchDataLength = createAsyncThunk('fetchDataLength/fetchDataStatus', async () => {
-	const response = await fetch(`https://demo.flexibee.eu/v2/c/demo/adresar.json?add-row-count=true`);
-	return await response.json();
-});
+import { 
+    fetchData, 
+    fetchDataFilter, 
+    fetchDataLength, 
+    fetchDataOthers 
+} from '../thunks/fetchThunk';
 
 const initialState = {
-    data: [],
-    dataOthers: [],
+    dataOthersBtns: [],
+    dataFirms: [],
     dataFilter: [],
-    allData: [],
-    allDataFilter: [],
+    allDataFirms: [],
+    allDataFirmsFilter: [],
     dataLength: [],
     length: 0,
     activeBtn: '',
@@ -41,13 +26,13 @@ const dataSlice = createSlice({
 	name: 'firmsData',
 	initialState,
     reducers: {
-        getData(state, action) {
-			state.data = action.payload;
+        setData(state, action) {
+			state.dataFirms = action.payload;
 		},
-        getDataFilter(state, action) {
+        setDataFilter(state, action) {
 			state.dataFilter = action.payload;
 		},
-        getLength(state, action) {
+        setLength(state, action) {
             state.length = action.payload
         },
         setActiveBtn(state, action) {
@@ -61,28 +46,28 @@ const dataSlice = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(fetchData.pending, (state) => {
             state.dataStatus = 'loading';
-			state.allData = [];
+			state.allDataFirms = [];
 		});
         builder.addCase(fetchData.fulfilled, (state, action) => {
             state.dataStatus = 'success';
-			state.allData = action.payload;
+			state.allDataFirms = action.payload;
         });
         builder.addCase(fetchData.rejected, (state) => {
             state.dataStatus = 'error';
-			state.allData = [];
+			state.allDataFirms = [];
         });
 
 		builder.addCase(fetchDataFilter.pending, (state) => {
             state.dataFilterStatus = 'loading';
-			state.allDataFilter = [];
+			state.allDataFirmsFilter = [];
 		});
         builder.addCase(fetchDataFilter.fulfilled, (state, action) => {
             state.dataFilterStatus = 'success';
-			state.allDataFilter = action.payload;
+			state.allDataFirmsFilter = action.payload;
         });
         builder.addCase(fetchDataFilter.rejected, (state) => {
             state.dataFilterStatus = 'error';
-			state.allDataFilter = [];
+			state.allDataFirmsFilter = [];
         });
 
 		builder.addCase(fetchDataLength.pending, (state) => {
@@ -96,26 +81,27 @@ const dataSlice = createSlice({
         });
 
 		builder.addCase(fetchDataOthers.pending, (state) => {
-			state.dataOthers = [];
+			state.dataOthersBtns = [];
             state.dataOthersStatus = 'loading'
 		});
         builder.addCase(fetchDataOthers.fulfilled, (state, action) => {
-            state.dataOthers = action.payload;
+            state.dataOthersBtns = action.payload;
             state.dataOthersStatus = 'success'
         });
         builder.addCase(fetchDataOthers.rejected, (state) => {
-			state.dataOthers = [];
+			state.dataOthersBtns = [];
             state.dataOthersStatus = 'error'
         });
 	},
 });
 
 export const {
-    getData,
-    getDataFilter,
-    getLength,
+    setData,
+    setDataFilter,
+    setLength,
     setActiveBtn,
-    setOthersBtn
+    setOthersBtn,
+    setTakeDataOthersBtns
 } = dataSlice.actions
 
 export default dataSlice.reducer;

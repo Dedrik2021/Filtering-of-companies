@@ -1,6 +1,8 @@
 import { memo } from 'react';
 
-const OthersDropdown = memo((props) => {
+import './filterDropdownOthersBtns.scss'
+
+const OthersDropdownBtns = memo((props) => {
 	const { 
         othersBtn, 
         onOthersBtn, 
@@ -21,12 +23,12 @@ const OthersDropdown = memo((props) => {
 			>
 				Others
 			</button>
-			<ul className={`dropdown-others ${othersBtn ? 'active' : ''}`}>
+			<ul className={`filter-dropdown-others-btns ${othersBtn ? 'active' : ''}`}>
 				{pscOthers.map((psc, i) => {
 					return (
-						<li className="dropdown-others__item" key={i}>
+						<li className="filter-dropdown-others-btns__item" key={i}>
 							<button
-								className={`dropdown-others__btn ${btn === i ? 'active' : ''}`}
+								className={`filter-dropdown-others-btns__btn ${btn === i ? 'active' : ''}`}
 								style={{ backgroundColor: 'black' }}
 								onClick={() => (
 									onActiveBtn2(
@@ -46,4 +48,4 @@ const OthersDropdown = memo((props) => {
 	);
 });
 
-export default OthersDropdown;
+export default OthersDropdownBtns;
