@@ -8,7 +8,7 @@ const OthersDropdownBtns = memo((props) => {
         onOthersBtn, 
         pscOthers, 
         btn, 
-        onActiveBtn2, 
+        onDropdownBtnClick, 
         setBtn, 
         dataOthersStatus 
     } = props;
@@ -31,7 +31,7 @@ const OthersDropdownBtns = memo((props) => {
 								className={`filter-dropdown-others-btns__btn ${btn === i ? 'active' : ''}`}
 								style={{ backgroundColor: 'black' }}
 								onClick={() => (
-									onActiveBtn2(
+									onDropdownBtnClick(
 										psc[0] + psc[1] + psc[2] + psc[3] + psc[4] + psc[5],
 									),
 									setBtn(i)

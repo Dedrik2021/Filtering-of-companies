@@ -24,7 +24,7 @@ const ShowMoreBtns = memo((props) => {
 				type="button"
 				onClick={onShowAllAddress}
 			>
-				{disabledAllDataBtn ? 'No More Address' : 'Show All Address'}
+				{disabledAllDataBtn ? 'Reset Filter' : 'Show All Address'}
 			</button>
 		</div>
 	);

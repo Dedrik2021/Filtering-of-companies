@@ -25,7 +25,7 @@ const App = () => {
 	const [page, setPage] = useState(40);
 	const [disabledAllDataBtn, setDisabledAllDataBtn] = useState(false);
 	const [disabledBtn, setDisabledBtn] = useState(false);
-	const { dataStatus, length, dataOthersStatus } = useSelector((state) => state.firmsData);
+	const { dataStatus, length } = useSelector((state) => state.firmsData);
 
 	useEffect(() => {
 		if (isNaN(length)) {

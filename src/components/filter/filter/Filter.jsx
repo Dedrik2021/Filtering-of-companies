@@ -21,7 +21,6 @@ const Filter = (props) => {
 		setOthersDataBtns(dataOthersBtns.winstrom !== undefined ? dataOthersBtns.winstrom.adresar : [])
 	}, [dataOthersBtns])
 
-	// const othersDataBtns = dataOthersBtns.winstrom !== undefined ? dataOthersBtns.winstrom.adresar : []
 	const numbrs = othersDataBtns && othersDataBtns.map((item) => item.psc).sort();
 	const uniNumbers = [...new Set(numbrs)];
 	const numbrsSpace = uniNumbers.map((item) => item.replace(/\s+/g, ''));
@@ -91,7 +90,7 @@ const Filter = (props) => {
 		},
 	];
 
-	const onActiveBtn = (id) => {
+	const onFilterBtnClick = (id) => {
 		dispatch(setActiveBtn(id));
 		dispatch(fetchData({ length, psc: id }));
 		dispatch(fetchDataFilter({ length, psc: id }));
@@ -100,7 +99,7 @@ const Filter = (props) => {
 		dispatch(setOthersBtn(false));
 	};
 
-	const onActiveBtn2 = (id) => {
+	const onDropdownBtnClick = (id) => {
 		dispatch(fetchData({ length, psc: id }));
 		setDisabledBtn(true);
 		setBtn(id[1]);
@@ -168,14 +167,14 @@ const Filter = (props) => {
 									}`}
 									type="button"
 									style={{ backgroundColor: styleBtn(name) }}
-									onClick={() => onActiveBtn(id)}
+									onClick={() => onFilterBtnClick(id)}
 								>
 									{name}
 								</button>
 
 								<DropdownBtns
 									btn={btn}
-									onActiveBtn2={onActiveBtn2}
+									onDropdownBtnClick={onDropdownBtnClick}
 									stylePsc={stylePsc}
 									setBtn={setBtn}
 									dataFilterStatus={dataFilterStatus}
@@ -192,7 +191,7 @@ const Filter = (props) => {
 					onOthersBtn={onOthersBtn} 
 					pscOthers={pscOthers} 
 					btn={btn} 
-					onActiveBtn2={onActiveBtn2} 
+					onDropdownBtnClick={onDropdownBtnClick} 
 					setBtn={setBtn} dataOthersStatus={dataOthersStatus}
 				/>
 				<button

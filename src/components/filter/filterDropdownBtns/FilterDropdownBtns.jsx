@@ -5,7 +5,7 @@ import './filterDropdownBtns.scss'
 const DropdownBtns = memo((props) => {
 	const { 
         btn, 
-        onActiveBtn2, 
+        onDropdownBtnClick, 
         stylePsc, 
         setBtn, 
         dataFilterStatus ,
@@ -23,7 +23,7 @@ const DropdownBtns = memo((props) => {
                             return (
                                 <button 
                                     className={`btn ${btn === id ? 'active' : ''}`}
-                                    onClick={() => (onActiveBtn2(psc[0] + psc[1] + psc[2]), setBtn(id))}
+                                    onClick={() => (onDropdownBtnClick(psc[0] + psc[1] + psc[2]), setBtn(id))}
                                     style={{ backgroundColor: stylePsc(psc) }}
 							        type="button" key={id}>
                                     {dataFilterStatus === 'loading' ? 'xxx xx' : psc}
