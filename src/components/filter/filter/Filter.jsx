@@ -21,6 +21,12 @@ const Filter = (props) => {
 		setOthersDataBtns(dataOthersBtns.winstrom !== undefined ? dataOthersBtns.winstrom.adresar : [])
 	}, [dataOthersBtns])
 
+	useEffect(() => {
+		if (disabledAllDataBtn) {
+			setBtn('')
+		}
+	},[disabledAllDataBtn])
+
 	const numbrs = othersDataBtns && othersDataBtns.map((item) => item.psc).sort();
 	const uniNumbers = [...new Set(numbrs)];
 	const numbrsSpace = uniNumbers.map((item) => item.replace(/\s+/g, ''));

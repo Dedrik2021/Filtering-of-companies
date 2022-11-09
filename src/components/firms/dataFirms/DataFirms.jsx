@@ -58,7 +58,7 @@ const DataFirms = ({ stylePsc }) => {
 							);
 						})}
 					</ul>
-					<ul className="list">
+					<ul className="list" >
 						{pscs.map((psc, i) => {
 							return (
 								<li
@@ -78,12 +78,12 @@ const DataFirms = ({ stylePsc }) => {
 				</>
 			);
 		} else {
-			return <h3 style={{color: 'red', textAlign: 'center', width: '1100px', fontSize: '50px', padding: '358px 0', backgroundColor: '#ccc'}}>NO DATA</h3>;
+			return <h3 style={{color: 'red', textAlign: 'center', width: '1100px', fontSize: '50px', padding: '358px 0'}}>NO DATA</h3>;
 		}
 	};
 
 	return (
-		<div className="firms-items__list">
+		<div className="firms-items__list" >
 			{dataFirmsAvailable()}
 		</div>
 	);

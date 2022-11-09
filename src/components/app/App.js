@@ -48,7 +48,7 @@ const App = () => {
 			dispatch(fetchData({ length: page, psc: '' }));
 			setTimeout(() => {
 				window.scrollTo(0, scrollRef.current.offsetTop);
-			}, 500);
+			}, 1000);
 		} else {
 			setDisabledBtn(true);
 		}
@@ -102,7 +102,6 @@ const App = () => {
 						disabledBtn={disabledBtn}
 						handlePageClick={handlePageClick}
 						onShowAllAddress={onShowAllAddress}
-						scrollRef={scrollRef}
 						disabledAllDataBtn={disabledAllDataBtn}
 					/>
 				</div>

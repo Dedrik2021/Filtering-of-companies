@@ -3,10 +3,10 @@ import { memo } from "react";
 import './showMoreBtns.scss'
 
 const ShowMoreBtns = memo((props) => {
-    const {disabledBtn, scrollRef, handlePageClick, onShowAllAddress, disabledAllDataBtn} = props
+    const {disabledBtn, handlePageClick, onShowAllAddress, disabledAllDataBtn} = props
 
 	return (
-		<div className="show-more" ref={scrollRef}>
+		<div className="show-more" >
 			<button
 				className={`show-more__btn ${disabledBtn ? 'active' : ''}`}
 				type="button"
