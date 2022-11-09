@@ -20,57 +20,71 @@ const DataFirms = ({ stylePsc }) => {
 	useEffect(() => {
 		dispatch(setData(allDataFirms.winstrom !== undefined && allDataFirms.winstrom.adresar));
 		dispatch(
-			setDataFilter(allDataFirmsFilter.winstrom !== undefined && allDataFirmsFilter.winstrom.adresar),
+			setDataFilter(
+				allDataFirmsFilter.winstrom !== undefined && allDataFirmsFilter.winstrom.adresar,
+			),
 		);
 		dispatch(setLength(Number(result[1])));
 	}, []);
 
+	const dataFirmsAvailable = () => {
+		if (dataFirms.length !== 0) {
+			return (
+				<>
+					<ul className="list">
+						{dataFirms.map((item, i) => {
+							return (
+								<li className="list__item list__item--length" key={item.id}>
+									{i + 1}
+								</li>
+							);
+						})}
+					</ul>
+					<ul className="list">
+						{dataFirms.map(({ id, nazev }) => {
+							return (
+								<li className="list__item" key={id}>
+									{nazev}
+								</li>
+							);
+						})}
+					</ul>
+					<ul className="list">
+						{dataFirms.map(({ id, ulice }) => {
+							return (
+								<li className="list__item" key={id}>
+									{ulice !== '' ? ulice : '-- -- --'}
+								</li>
+							);
+						})}
+					</ul>
+					<ul className="list">
+						{pscs.map((psc, i) => {
+							return (
+								<li
+									className="list__item"
+									key={i}
+									style={{
+										backgroundColor: stylePsc(psc[0]),
+										color: psc !== '' ? 'white' : 'black',
+										borderColor: 'white',
+									}}
+								>
+									{psc !== '' ? psc : 'xxx xx'}
+								</li>
+							);
+						})}
+					</ul>
+				</>
+			);
+		} else {
+			return <h3 style={{color: 'red', textAlign: 'center', width: '1100px', fontSize: '50px', padding: '230px 0'}}>NO DATA</h3>;
+		}
+	};
+
 	return (
-		<div className="firms-items__list">
-			<ul className="list">
-				{dataFirms.map((item, i) => {
-					return (
-						<li className="list__item list__item--length" key={item.id}>
-							{i + 1}
-						</li>
-					);
-				})}
-			</ul>
-			<ul className="list">
-				{dataFirms.map(({ id, nazev }) => {
-					return (
-						<li className="list__item" key={id}>
-							{nazev}
-						</li>
-					);
-				})}
-			</ul>
-			<ul className="list">
-				{dataFirms.map(({ id, ulice }) => {
-					return (
-						<li className="list__item" key={id}>
-							{ulice !== '' ? ulice : '-- -- --'}
-						</li>
-					);
-				})}
-			</ul>
-			<ul className="list">
-				{pscs.map((psc, i) => {
-					return (
-						<li
-							className="list__item"
-							key={i}
-							style={{
-								backgroundColor: stylePsc(psc[0]),
-								color: psc !== '' ? 'white' : 'black',
-								borderColor: 'white',
-							}}
-						>
-							{psc !== '' ? psc : 'xxx xx'}
-						</li>
-					);
-				})}
-			</ul>
+		<div className="firms-items__list" style={{paddingBottom: dataFirms.length > 0 && dataFirms.length < 15 ? '250px' : '0'}}>
+			{dataFirmsAvailable()}
 		</div>
 	);
 };

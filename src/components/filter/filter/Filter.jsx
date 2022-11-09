@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import DropdownBtns from '../filterDropdownBtns/FilterDropdownBtns';
-import OthersDropdownBtns from '../filterDropdownOthersBtns/FilterDropdownOthersBtns';
+import FilterDropdownBtns from '../filterDropdownBtns/FilterDropdownBtns';
+import FilterDropdownOthersBtns from '../filterDropdownOthersBtns/FilterDropdownOthersBtns';
 import { fetchData, fetchDataFilter} from '../../../redux/thunks/fetchThunk';
 import { setActiveBtn, setOthersBtn } from '../../../redux/slices/firmsDataSlice';
 
@@ -145,7 +145,7 @@ const Filter = (props) => {
 									{name}
 								</button>
 
-								<DropdownBtns
+								<FilterDropdownBtns
 									btn={btn}
 									onDropdownBtnClick={onDropdownBtnClick}
 									stylePsc={stylePsc}
@@ -158,14 +158,16 @@ const Filter = (props) => {
 						);
 					})}
 				</ul>
-				<OthersDropdownBtns
+				<FilterDropdownOthersBtns
 					disabledAllDataBtn={disabledAllDataBtn} 
 					othersBtn={othersBtn} 
 					onOthersBtn={onOthersBtn} 
 					pscOthers={pscOthers} 
 					btn={btn} 
 					onDropdownBtnClick={onDropdownBtnClick} 
-					setBtn={setBtn} dataOthersStatus={dataOthersStatus}
+					setBtn={setBtn} 
+					dataOthersStatus={dataOthersStatus}
+					setDisabledAllDataBtn={setDisabledAllDataBtn}
 				/>
 				<button
 					className={`filter-list__btn filter-list__btn--reset ${

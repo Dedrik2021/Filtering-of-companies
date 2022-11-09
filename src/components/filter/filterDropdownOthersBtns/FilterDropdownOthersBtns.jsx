@@ -1,17 +1,10 @@
 import { memo } from 'react';
 
-import './filterDropdownOthersBtns.scss'
+import './filterDropdownOthersBtns.scss';
 
 const OthersDropdownBtns = memo((props) => {
-	const { 
-        othersBtn, 
-        onOthersBtn, 
-        pscOthers, 
-        btn, 
-        onDropdownBtnClick, 
-        setBtn, 
-        dataOthersStatus 
-    } = props;
+	const { othersBtn, onOthersBtn, pscOthers, btn, onDropdownBtnClick, setBtn, dataOthersStatus, setDisabledAllDataBtn } =
+		props;
 
 	return (
 		<div className={`filter__box `}>
@@ -28,13 +21,15 @@ const OthersDropdownBtns = memo((props) => {
 					return (
 						<li className="filter-dropdown-others-btns__item" key={i}>
 							<button
-								className={`filter-dropdown-others-btns__btn ${btn === i ? 'active' : ''}`}
+								className={`filter-dropdown-others-btns__btn ${
+									btn === i ? 'active' : ''
+								}`}
 								style={{ backgroundColor: 'black' }}
 								onClick={() => (
 									onDropdownBtnClick(
-										psc[0] + psc[1] + psc[2] + psc[3] + psc[4] + psc[5],
+										psc[0] + psc[1] + psc[2] + psc[3] + psc[4] + psc[5] 
 									),
-									setBtn(i)
+									setBtn(i), setDisabledAllDataBtn(false)
 								)}
 								type="button"
 							>
