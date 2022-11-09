@@ -1,5 +1,12 @@
 .firms {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
+    padding-top: 50px;
+}
+
+.firms-items__box {
+    height: 780px;
+    overflow: auto;
+    width: 1400px;
 }

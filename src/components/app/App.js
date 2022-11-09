@@ -91,7 +91,6 @@ const App = () => {
 			</Helmet>
 			<div className="app">
 				<div className="container">
-					<h1 className="title">List Of Companies</h1>
 					{dataLoaded()}
 					<FirmsList
 						setDisabledBtn={setDisabledBtn}

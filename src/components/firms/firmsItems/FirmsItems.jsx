@@ -37,7 +37,7 @@ const FirmsItems = ({stylePsc}) => {
 	return (
 		<div className="firms-items">
 			<div className="firms-items__box">
-				<ul className="firms-items__list">
+				<ul className="firms-items__list firms-items__list--fixed">
 					<li className="firms-items__item" >
 						<h3 className="firms-items__title">№</h3>
 					</li>

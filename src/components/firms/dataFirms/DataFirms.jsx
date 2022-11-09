@@ -78,12 +78,12 @@ const DataFirms = ({ stylePsc }) => {
 				</>
 			);
 		} else {
-			return <h3 style={{color: 'red', textAlign: 'center', width: '1100px', fontSize: '50px', padding: '230px 0'}}>NO DATA</h3>;
+			return <h3 style={{color: 'red', textAlign: 'center', width: '1100px', fontSize: '50px', padding: '358px 0', backgroundColor: '#ccc'}}>NO DATA</h3>;
 		}
 	};
 
 	return (
-		<div className="firms-items__list" style={{paddingBottom: dataFirms.length > 0 && dataFirms.length < 15 ? '250px' : '0'}}>
+		<div className="firms-items__list">
 			{dataFirmsAvailable()}
 		</div>
 	);

@@ -97,6 +97,7 @@ const Filter = (props) => {
 		setDisabledBtn(true);
 		setDisabledAllDataBtn(false);
 		dispatch(setOthersBtn(false));
+		setBtn('')
 	};
 
 	const onDropdownBtnClick = (id) => {
