@@ -12,7 +12,7 @@ const ShowMoreBtns = memo((props) => {
 				type="button"
 				onClick={handlePageClick}
 			>
-				{disabledBtn ? 'No More Address' : 'Next 20 Address'}
+				{disabledBtn ? 'No More Items' : 'Add 25 Items'}
 			</button>
 
 			<button

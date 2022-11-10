@@ -124,8 +124,8 @@ const Filter = (props) => {
 		setBtn('');
 		setDisabledBtn(false);
 		setDisabledAllDataBtn(false);
-		dispatch(fetchData({ length: 20, psc: '' }));
-		dispatch(fetchDataFilter({ length: 20, psc: '' }));
+		dispatch(fetchData({ length: 25, psc: '' }));
+		dispatch(fetchDataFilter({ length: 25, psc: '' }));
 	};
 
 	return (

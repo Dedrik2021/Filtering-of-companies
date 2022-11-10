@@ -4,7 +4,7 @@
     text-align: center;
     position: fixed;
     border: 1px solid black;
-    padding: 0 5px 10px;
+    padding: 0 5px 15px;
 
     &__title {
         padding-top: 10px;
@@ -16,7 +16,7 @@
         transition: height 0.5s ease-in-out, overflow 0.5s ease-in-out;
 
         &.active {
-            height: 725px;
+            height: 690px;
             overflow: auto;
         }
     }

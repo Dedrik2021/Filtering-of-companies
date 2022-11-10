@@ -22,7 +22,7 @@ import '../../scss/style.scss'
 const App = () => {
 	const dispatch = useDispatch();
 	const scrollRef = useRef(null);
-	const [page, setPage] = useState(40);
+	const [page, setPage] = useState(50);
 	const [disabledAllDataBtn, setDisabledAllDataBtn] = useState(false);
 	const [disabledBtn, setDisabledBtn] = useState(false);
 	const { dataStatus, length } = useSelector((state) => state.firmsData);
@@ -36,15 +36,15 @@ const App = () => {
 			setDisabledAllDataBtn(false);
 		}
 
-		dispatch(fetchData({ length: 20, psc: '' }));
-		dispatch(fetchDataFilter({ length: 20, psc: '' }));
+		dispatch(fetchData({ length: 25, psc: '' }));
+		dispatch(fetchDataFilter({ length: 25, psc: '' }));
 		dispatch(fetchDataOthers(length))
 		dispatch(fetchDataLength());
 	}, [length]);
 
 	const handlePageClick = () => {
 		if (page <= length) {
-			setPage(page + 20);
+			setPage(page + 25);
 			dispatch(fetchData({ length: page, psc: '' }));
 			setTimeout(() => {
 				window.scrollTo(0, scrollRef.current.offsetTop);

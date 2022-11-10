@@ -78,7 +78,7 @@ const DataFirms = ({ stylePsc }) => {
 				</>
 			);
 		} else {
-			return <h3 style={{color: 'red', textAlign: 'center', width: '1100px', fontSize: '50px', padding: '358px 0'}}>NO DATA</h3>;
+			return <h3 style={{color: 'red', textAlign: 'center', width: '1100px', fontSize: '50px', padding: '345px 0', backgroundColor: '#ccc'}}>NO DATA</h3>;
 		}
 	};
 
