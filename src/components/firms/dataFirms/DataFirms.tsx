@@ -1,30 +1,38 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, FC } from 'react';
 
 import { setData, setDataFilter, setLength } from '../../../redux/slices/firmsDataSlice';
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
 
-const DataFirms = ({ stylePsc }) => {
-	const dispatch = useDispatch();
-	const { dataFirms, allDataFirms, allDataFirmsFilter, dataLength } = useSelector(
+interface DataFirmsProps {
+	stylePsc: (value: string) => string;
+}
+
+const DataFirms: FC<DataFirmsProps> = (props) => {
+	const { stylePsc } = props;
+	const dispatch = useAppDispatch();
+	const { dataFirms, allDataFirms, allDataFirmsFilter, dataLength } = useAppSelector(
 		(state) => state.firmsData,
 	);
 	const pscs = dataFirms.map((item) => item.psc.replace(/\s+/g, ''));
 
-	let result = [];
+	let result: number[] = [];
+	type DataLengthType = typeof dataLength.winstrom
 	for (let i in dataLength.winstrom) {
 		if (dataLength.winstrom.hasOwnProperty(i)) {
-			result.push(dataLength.winstrom[i]);
+			result.push(dataLength.winstrom[i as keyof DataLengthType]);
 		}
 	}
 
 	useEffect(() => {
-		dispatch(setData(allDataFirms.winstrom !== undefined && allDataFirms.winstrom.adresar));
+		dispatch(setData(allDataFirms.winstrom !== undefined ? allDataFirms.winstrom.adresar : []));
 		dispatch(
 			setDataFilter(
-				allDataFirmsFilter.winstrom !== undefined && allDataFirmsFilter.winstrom.adresar,
+				allDataFirmsFilter.winstrom !== undefined
+					? allDataFirmsFilter.winstrom.adresar
+					: [],
 			),
 		);
-		dispatch(setLength(Number(result[1])));
+		dispatch(setLength(result[1]));
 	}, []);
 
 	const dataFirmsAvailable = () => {
@@ -58,7 +66,7 @@ const DataFirms = ({ stylePsc }) => {
 							);
 						})}
 					</ul>
-					<ul className="list" >
+					<ul className="list">
 						{pscs.map((psc, i) => {
 							return (
 								<li
@@ -78,15 +86,24 @@ const DataFirms = ({ stylePsc }) => {
 				</>
 			);
 		} else {
-			return <h3 style={{color: 'red', textAlign: 'center', width: '1100px', fontSize: '50px', padding: '345px 0', backgroundColor: '#ccc'}}>NO DATA</h3>;
+			return (
+				<h3
+					style={{
+						color: 'red',
+						textAlign: 'center',
+						width: '1100px',
+						fontSize: '50px',
+						padding: '345px 0',
+						backgroundColor: '#ccc',
+					}}
+				>
+					NO DATA
+				</h3>
+			);
 		}
 	};
 
-	return (
-		<div className="firms-items__list" >
-			{dataFirmsAvailable()}
-		</div>
-	);
+	return <div className="firms-items__list">{dataFirmsAvailable()}</div>;
 };
 
 export default DataFirms;

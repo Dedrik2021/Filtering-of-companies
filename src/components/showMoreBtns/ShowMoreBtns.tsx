@@ -1,12 +1,19 @@
-import { memo } from "react";
+import { memo, FC } from 'react';
 
-import './showMoreBtns.scss'
+import './showMoreBtns.scss';
 
-const ShowMoreBtns = memo((props) => {
-    const {disabledBtn, handlePageClick, onShowAllAddress, disabledAllDataBtn} = props
+interface ShowMoreBtnsProps {
+	disabledBtn: boolean;
+	handlePageClick: () => void;
+	onShowAllAddress: () => void;
+	disabledAllDataBtn: boolean;
+}
+
+const ShowMoreBtns: FC<ShowMoreBtnsProps> = memo((props) => {
+	const { disabledBtn, handlePageClick, onShowAllAddress, disabledAllDataBtn } = props;
 
 	return (
-		<div className="show-more" >
+		<div className="show-more">
 			<button
 				className={`show-more__btn ${disabledBtn ? 'active' : ''}`}
 				type="button"
@@ -28,6 +35,6 @@ const ShowMoreBtns = memo((props) => {
 			</button>
 		</div>
 	);
-}) 
+});
 
 export default ShowMoreBtns;

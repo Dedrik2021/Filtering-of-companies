@@ -1,14 +1,25 @@
-import { memo } from "react";
+/* eslint-disable no-sequences */
+import { memo, FC } from "react";
 
 import './filterDropdownBtns.scss'
 
-const DropdownBtns = memo((props) => {
+interface FilterDropdownProps {
+    btn: null | number,
+    onDropdownBtnClick: (psc: string) => void,
+    stylePsc: (value: string) => string;
+    setBtn: (value: number | ((prevVar: null | number) => number)) => void;
+    dataFilterStatus: string,
+    result: {group: number, numbers: { id: number; psc: string; }[]}[],
+    activeBtn: null | number
+}
+
+const DropdownBtns: FC<FilterDropdownProps> = memo((props) => {
 	const { 
         btn, 
         onDropdownBtnClick, 
         stylePsc, 
         setBtn, 
-        dataFilterStatus ,
+        dataFilterStatus,
         result,
         activeBtn
     } = props;
@@ -23,9 +34,9 @@ const DropdownBtns = memo((props) => {
                             return (
                                 <button 
                                     className={`btn ${btn === id ? 'active' : ''}`}
-                                    onClick={() => (onDropdownBtnClick(psc[0] + psc[1] + psc[2]), setBtn(id))}
-                                    style={{ backgroundColor: stylePsc(psc[1]) }}
-							        type="button" key={id}>
+                                    onClick={() => (onDropdownBtnClick(psc[0] + psc[1] + psc[2]), setBtn((id)))}
+                                    style={{ backgroundColor: stylePsc(psc[1]) }} 
+                                    type="button" key={id}>
                                     {dataFilterStatus === 'loading' ? 'xxx xx' : psc}
                                 </button>
                             )

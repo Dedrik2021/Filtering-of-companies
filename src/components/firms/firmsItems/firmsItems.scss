@@ -1,7 +1,7 @@
 @import '../../../scss/_vars.scss';
 
 .firms-items {
-    
+
     &__list {
         display: grid;
         grid-template-columns: 0.2fr 1fr 1fr 1fr;
@@ -13,17 +13,19 @@
             background-color: white;
         }
     }
-    
+
     &__item {
         max-width: 350px;
         width: 100%;
         padding: 10px 0;
         text-align: center;
         border: 1px solid black;
-        
+
         &:not(:last-child) {
             border-right: none;
         }
+
+
     }
 }
 
@@ -31,7 +33,7 @@
     border: 1px solid black;
     border-top: 0;
     padding-top: 45px;
-    
+
     &:not(:last-child) {
         border-right: 0;
     }

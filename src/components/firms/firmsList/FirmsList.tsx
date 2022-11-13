@@ -1,17 +1,21 @@
+import {FC} from 'react'
+
 import Filter from '../../filter/filter/Filter';
 import FirmsItems from '../firmsItems/FirmsItems';
 
-import './firmsList.scss'
+import './firmsList.scss';
 
-const FirmsList = (props) => {
-	const { 
-		setDisabledBtn, 
-		setDisabledAllDataBtn, 
-		disabledBtn, 
-		disabledAllDataBtn
-	} = props;
+interface FirmsListProps {
+	setDisabledBtn: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+	setDisabledAllDataBtn: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+	disabledBtn: boolean,
+	disabledAllDataBtn: boolean
+}
 
-	const stylePsc = (psc) => {
+const FirmsList: FC<FirmsListProps> = (props) => {
+	const { setDisabledBtn, setDisabledAllDataBtn, disabledBtn, disabledAllDataBtn } = props;
+
+	const stylePsc = (psc: string) => {
 		switch (psc) {
 			case '0':
 				return 'red';
@@ -46,7 +50,7 @@ const FirmsList = (props) => {
 				setDisabledAllDataBtn={setDisabledAllDataBtn}
 				disabledBtn={disabledBtn}
 				disabledAllDataBtn={disabledAllDataBtn}
-			/>
+				dataOthersStatus={''}			/>
 			<FirmsItems stylePsc={stylePsc} />
 		</section>
 	);

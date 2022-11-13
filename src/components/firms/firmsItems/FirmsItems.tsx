@@ -1,13 +1,18 @@
-import { useSelector } from 'react-redux';
+import {FC} from 'react'
 
 import DataFirms from '../dataFirms/DataFirms';
 import Spinner from '../../../spinner/Spinner';
-import dataFirmsError from '../../../assets/images/data-error.webp';
+import dataFirmsError from '../../../assets/images/data-error.webp'
+import { useAppSelector } from '../../../redux/store';
 
 import './firmsItems.scss'
 
-const FirmsItems = ({stylePsc}) => {
-	const { dataStatus, dataFilterStatus } = useSelector((state) => state.firmsData);
+interface FirmsItemsProps {
+	stylePsc: (value: string) => string
+}
+
+const FirmsItems: FC<FirmsItemsProps> = ({stylePsc}) => {
+	const { dataStatus, dataFilterStatus } = useAppSelector((state) => state.firmsData);
 
 	const dataFirmsLoaded = () => {
 		if (dataStatus === 'success' && dataFilterStatus === 'success') {

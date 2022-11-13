@@ -1,6 +1,5 @@
-import { useEffect, useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Helmet } from 'react-helmet';
+import React, { useEffect, useState, FC } from 'react';
+import {Helmet} from 'react-helmet';
 
 import FirmsList from '../firms/firmsList/FirmsList';
 import ShowMoreBtns from '../showMoreBtns/ShowMoreBtns';
@@ -10,6 +9,7 @@ import {
 	fetchDataLength,
 	fetchDataOthers,
 } from '../../redux/thunks/fetchThunk';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 
 import {
 	setActiveBtn,
@@ -19,13 +19,12 @@ import {
 import './app.scss';
 import '../../scss/style.scss'
 
-const App = () => {
-	const dispatch = useDispatch();
-	const scrollRef = useRef(null);
+const App: FC = () => {
+	const dispatch = useAppDispatch();
 	const [page, setPage] = useState(50);
 	const [disabledAllDataBtn, setDisabledAllDataBtn] = useState(false);
 	const [disabledBtn, setDisabledBtn] = useState(false);
-	const { dataStatus, length } = useSelector((state) => state.firmsData);
+	const { dataStatus, length } = useAppSelector((state) => state.firmsData);
 
 	useEffect(() => {
 		if (isNaN(length)) {
@@ -38,17 +37,14 @@ const App = () => {
 
 		dispatch(fetchData({ length: 25, psc: '' }));
 		dispatch(fetchDataFilter({ length: 25, psc: '' }));
-		dispatch(fetchDataOthers(length))
+		dispatch(fetchDataOthers({length}))
 		dispatch(fetchDataLength());
-	}, [length]);
+	}, [dispatch, length]);
 
 	const handlePageClick = () => {
 		if (page <= length) {
 			setPage(page + 25);
 			dispatch(fetchData({ length: page, psc: '' }));
-			setTimeout(() => {
-				window.scrollTo(0, scrollRef.current.offsetTop);
-			}, 1000);
 		} else {
 			setDisabledBtn(true);
 		}
@@ -58,7 +54,7 @@ const App = () => {
 		dispatch(fetchData({ length, psc: '' }));
 		setDisabledBtn(true);
 		setDisabledAllDataBtn(true);
-		dispatch(setActiveBtn(''));
+		dispatch(setActiveBtn(null));
 		dispatch(setOthersBtn(false))
 		window.scrollTo(0, 0);
 	};

@@ -1,10 +1,30 @@
-import { memo } from 'react';
+/* eslint-disable no-sequences */
+import { memo, FC } from 'react';
 
 import './filterDropdownOthersBtns.scss';
 
-const OthersDropdownBtns = memo((props) => {
-	const { othersBtn, onOthersBtn, pscOthers, btn, onDropdownBtnClick, setBtn, dataOthersStatus, setDisabledAllDataBtn } =
-		props;
+interface OthersDropdownBtnsProps {
+	othersBtn: boolean,
+	onOthersBtn: () => void,
+	pscOthers: string[], 
+	btn: null | number,
+	onDropdownBtnClick: (psc: string) => void,
+	setBtn: (value: number | ((prevVar: null | number) => number)) => void;
+	setDisabledAllDataBtn: (value: boolean) => void;
+	dataOthersStatus: string
+}
+
+const OthersDropdownBtns: FC<OthersDropdownBtnsProps> = memo((props) => {
+	const {
+		othersBtn,
+		onOthersBtn,
+		pscOthers,
+		btn,
+		onDropdownBtnClick,
+		setBtn,
+		dataOthersStatus,
+		setDisabledAllDataBtn,
+	} = props;
 
 	return (
 		<div className={`filter__box `}>
@@ -22,14 +42,15 @@ const OthersDropdownBtns = memo((props) => {
 						<li className="filter-dropdown-others-btns__item" key={i}>
 							<button
 								className={`filter-dropdown-others-btns__btn ${
-									btn === i ? 'active' : ''
+									Number(btn) === i ? 'active' : ''
 								}`}
 								style={{ backgroundColor: 'black' }}
 								onClick={() => (
 									onDropdownBtnClick(
-										psc[0] + psc[1] + psc[2] + psc[3] + psc[4] + psc[5] 
+										psc[0] + psc[1] + psc[2] + psc[3] + psc[4] + psc[5],
 									),
-									setBtn(i), setDisabledAllDataBtn(false)
+									setBtn(i),
+									setDisabledAllDataBtn(false)
 								)}
 								type="button"
 							>

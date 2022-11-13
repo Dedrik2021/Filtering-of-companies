@@ -1,39 +1,60 @@
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState, FC } from 'react';
 
 import FilterDropdownBtns from '../filterDropdownBtns/FilterDropdownBtns';
 import FilterDropdownOthersBtns from '../filterDropdownOthersBtns/FilterDropdownOthersBtns';
-import { fetchData, fetchDataFilter} from '../../../redux/thunks/fetchThunk';
+import { fetchData, fetchDataFilter } from '../../../redux/thunks/fetchThunk';
 import { setActiveBtn, setOthersBtn } from '../../../redux/slices/firmsDataSlice';
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
+import { DataFirmsObj } from '../../../redux/slices/types';
 
-import './filter.scss'
+import './filter.scss';
 
-const Filter = (props) => {
-	const { stylePsc, setDisabledBtn, setDisabledAllDataBtn, disabledBtn, disabledAllDataBtn, dataOthersStatus } = props;
-	const dispatch = useDispatch();
-	const [btn, setBtn] = useState(false);
-	const [othersDataBtns, setOthersDataBtns] = useState([])
-	const { dataFilterStatus, length, dataFilter, activeBtn, dataOthersBtns, othersBtn } = useSelector(
-		(state) => state.firmsData,
-	);
+export interface FilterProps {
+	stylePsc: (psc: string) => string;
+	setDisabledBtn: (value: boolean) => void;
+	setDisabledAllDataBtn: (value: boolean) => void;
+	disabledBtn: boolean;
+	disabledAllDataBtn: boolean;
+	dataOthersStatus: string;
+}
+
+const Filter: FC<FilterProps> = (props) => {
+	const {
+		stylePsc,
+		setDisabledBtn,
+		setDisabledAllDataBtn,
+		disabledBtn,
+		disabledAllDataBtn,
+		dataOthersStatus,
+	} = props;
+
+	const dispatch = useAppDispatch();
+	const [btn, setBtn] = useState<null | number>(null);
+	const [othersDataBtns, setOthersDataBtns] = useState<DataFirmsObj[]>([]);
+	const { dataFilterStatus, length, dataFilter, activeBtn, dataOthersBtns, othersBtn } =
+		useAppSelector(
+			(state) => state.firmsData,
+		);
 
 	useEffect(() => {
-		setOthersDataBtns(dataOthersBtns.winstrom !== undefined ? dataOthersBtns.winstrom.adresar : [])
-	}, [dataOthersBtns])
+		setOthersDataBtns(
+			dataOthersBtns.winstrom !== undefined ? dataOthersBtns.winstrom.adresar : [],
+		);
+	}, [dataOthersBtns]);
 
 	useEffect(() => {
 		if (disabledAllDataBtn) {
-			setBtn('')
+			setBtn(null);
 		}
-	},[disabledAllDataBtn])
+	}, [disabledAllDataBtn]);
 
 	const numbrs = othersDataBtns && othersDataBtns.map((item) => item.psc).sort();
-	const uniNumbers = [...new Set(numbrs)];
+	const uniNumbers = Array.from(new Set(numbrs));
 	const numbrsSpace = uniNumbers.map((item) => item.replace(/\s+/g, ''));
 	const pscOthers = numbrsSpace.filter((item) => item.length > 5);
 
 	const numbers = dataFilter.map((item) => item.psc).sort();
-	const uniqueNumbers = [...new Set(numbers)];
+	const uniqueNumbers = Array.from(new Set(numbers));
 	const numbersSpace = uniqueNumbers.map((item) => item.replace(/\s+/g, ''));
 	const numbersLength = numbersSpace.filter((item) => item.length === 5);
 	const numbersString = numbersLength.map((item) => item.replace(/[^0-9]/g, ''));
@@ -43,7 +64,7 @@ const Filter = (props) => {
 		group: +num.toString()[1],
 	}));
 
-	const result = [];
+	const result: {group: number, numbers: { id: number; psc: string; }[]}[] = [];
 	numbersWithGroups.forEach(({ number, group }) => {
 		const existingGroupIndex = result.findIndex((resultItem) => resultItem.group === group);
 		if (existingGroupIndex === -1) {
@@ -96,32 +117,32 @@ const Filter = (props) => {
 		},
 	];
 
-	const onFilterBtnClick = (id) => {
-		dispatch(setActiveBtn(id));
-		dispatch(fetchData({ length, psc: id }));
-		dispatch(fetchDataFilter({ length, psc: id }));
+	const onFilterBtnClick = (psc: number) => {
+		dispatch(setActiveBtn(psc));
+		dispatch(fetchData({ length, psc: String(psc) }));
+		dispatch(fetchDataFilter({ length, psc: String(psc) }));
 		setDisabledBtn(true);
 		setDisabledAllDataBtn(false);
 		dispatch(setOthersBtn(false));
-		setBtn('')
+		setBtn(null);
 	};
 
-	const onDropdownBtnClick = (id) => {
-		dispatch(fetchData({ length, psc: id }));
-		setDisabledBtn(true);
-		setBtn(id[1]);
+	const onDropdownBtnClick = (psc: string) => {
+		dispatch(fetchData({ length, psc: psc }));
+		setDisabledBtn(true)
+		setBtn(Number(psc[1]));
 	};
 
-	const onOthersBtn = () => {
+	const onOthersBtnClick = () => {
 		setDisabledBtn(true);
 		dispatch(setOthersBtn(true));
-		dispatch(setActiveBtn(''));
+		dispatch(setActiveBtn(null));
 	};
 
-	const onResetBtn = () => {
+	const onResetBtnClick = () => {
 		dispatch(setOthersBtn(false));
-		dispatch(setActiveBtn(''));
-		setBtn('');
+		dispatch(setActiveBtn(null));
+		setBtn(null);
 		setDisabledBtn(false);
 		setDisabledAllDataBtn(false);
 		dispatch(fetchData({ length: 25, psc: '' }));
@@ -132,7 +153,9 @@ const Filter = (props) => {
 		<div className="filter">
 			<h3 className="filter__title">Filter: PSČ</h3>
 			<div
-				className={`filter__inner ${disabledAllDataBtn ? othersBtn ? 'active' : '' : disabledBtn ? 'active' : ''}`}
+				className={`filter__inner ${
+					disabledAllDataBtn ? (othersBtn ? 'active' : '') : disabledBtn ? 'active' : ''
+				}`}
 			>
 				<ul className="filter-list">
 					{filterBbtns.map(({ id, name }) => {
@@ -166,13 +189,12 @@ const Filter = (props) => {
 					})}
 				</ul>
 				<FilterDropdownOthersBtns
-					disabledAllDataBtn={disabledAllDataBtn} 
-					othersBtn={othersBtn} 
-					onOthersBtn={onOthersBtn} 
-					pscOthers={pscOthers} 
-					btn={btn} 
-					onDropdownBtnClick={onDropdownBtnClick} 
-					setBtn={setBtn} 
+					othersBtn={othersBtn}
+					onOthersBtn={onOthersBtnClick}
+					pscOthers={pscOthers}
+					btn={btn}
+					onDropdownBtnClick={onDropdownBtnClick}
+					setBtn={setBtn}
 					dataOthersStatus={dataOthersStatus}
 					setDisabledAllDataBtn={setDisabledAllDataBtn}
 				/>
@@ -181,7 +203,7 @@ const Filter = (props) => {
 						disabledBtn ? '' : 'active'
 					}`}
 					type="button"
-					onClick={onResetBtn}
+					onClick={onResetBtnClick}
 				>
 					Reset Filter
 				</button>
