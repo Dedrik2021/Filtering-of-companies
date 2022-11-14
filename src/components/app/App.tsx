@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC } from 'react';
+import { useEffect, useState, FC } from 'react';
 import {Helmet} from 'react-helmet';
 
 import FirmsList from '../firms/firmsList/FirmsList';

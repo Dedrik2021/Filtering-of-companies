@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, memo} from 'react'
 
 import Filter from '../../filter/filter/Filter';
 import FirmsItems from '../firmsItems/FirmsItems';
@@ -12,7 +12,7 @@ interface FirmsListProps {
 	disabledAllDataBtn: boolean
 }
 
-const FirmsList: FC<FirmsListProps> = (props) => {
+const FirmsList: FC<FirmsListProps> = memo((props) => {
 	const { setDisabledBtn, setDisabledAllDataBtn, disabledBtn, disabledAllDataBtn } = props;
 
 	const stylePsc = (psc: string) => {
@@ -54,6 +54,6 @@ const FirmsList: FC<FirmsListProps> = (props) => {
 			<FirmsItems stylePsc={stylePsc} />
 		</section>
 	);
-};
+})
 
 export default FirmsList;

@@ -1,4 +1,4 @@
-import { useEffect, useState, FC } from 'react';
+import { useEffect, useState, FC, memo } from 'react';
 
 import FilterDropdownBtns from '../filterDropdownBtns/FilterDropdownBtns';
 import FilterDropdownOthersBtns from '../filterDropdownOthersBtns/FilterDropdownOthersBtns';
@@ -18,7 +18,7 @@ export interface FilterProps {
 	dataOthersStatus: string;
 }
 
-const Filter: FC<FilterProps> = (props) => {
+const Filter: FC<FilterProps> = memo((props) => {
 	const {
 		stylePsc,
 		setDisabledBtn,
@@ -210,6 +210,6 @@ const Filter: FC<FilterProps> = (props) => {
 			</div>
 		</div>
 	);
-};
+})
 
 export default Filter;

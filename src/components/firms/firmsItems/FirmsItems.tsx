@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, memo} from 'react'
 
 import DataFirms from '../dataFirms/DataFirms';
 import Spinner from '../../../spinner/Spinner';
@@ -11,7 +11,7 @@ interface FirmsItemsProps {
 	stylePsc: (value: string) => string
 }
 
-const FirmsItems: FC<FirmsItemsProps> = ({stylePsc}) => {
+const FirmsItems: FC<FirmsItemsProps> = memo(({stylePsc}) => {
 	const { dataStatus, dataFilterStatus } = useAppSelector((state) => state.firmsData);
 
 	const dataFirmsLoaded = () => {
@@ -60,6 +60,6 @@ const FirmsItems: FC<FirmsItemsProps> = ({stylePsc}) => {
 			</div>
 		</div>
 	)
-};
+})
 
 export default FirmsItems;

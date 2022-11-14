@@ -1,4 +1,4 @@
-import { useEffect, FC } from 'react';
+import { useEffect, FC, memo } from 'react';
 
 import { setData, setDataFilter, setLength } from '../../../redux/slices/firmsDataSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
@@ -7,7 +7,7 @@ interface DataFirmsProps {
 	stylePsc: (value: string) => string;
 }
 
-const DataFirms: FC<DataFirmsProps> = (props) => {
+const DataFirms: FC<DataFirmsProps> = memo((props) => {
 	const { stylePsc } = props;
 	const dispatch = useAppDispatch();
 	const { dataFirms, allDataFirms, allDataFirmsFilter, dataLength } = useAppSelector(
@@ -104,6 +104,6 @@ const DataFirms: FC<DataFirmsProps> = (props) => {
 	};
 
 	return <div className="firms-items__list">{dataFirmsAvailable()}</div>;
-};
+})
 
 export default DataFirms;
