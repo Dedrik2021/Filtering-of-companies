@@ -16,7 +16,10 @@ const initialState: InitialState = {
     allDataFirmsFilter: {winstrom: undefined},
     dataLength: {winstrom: undefined},
     length: 0,
+    searchParams: '',
+    btn: null,
     activeBtn: null,
+    disabledBtn: false,
     dataOthersBtns: {winstrom: undefined},
     othersBtn: false,
 	dataStatus: Status.LOADING,
@@ -42,6 +45,15 @@ const dataSlice = createSlice({
         },
         setOthersBtn(state, action: PayloadAction<boolean>) {
             state.othersBtn = action.payload
+        },
+        setBtn(state, action: PayloadAction<null | number>) {
+            state.btn = action.payload
+        },
+        setSearchParams(state, action: PayloadAction<string>) {
+            state.searchParams = action.payload
+        },
+        setDisabledBtn(state, action: PayloadAction<boolean>) {
+            state.disabledBtn = action.payload
         }
     },
 
@@ -102,7 +114,10 @@ export const {
     setDataFilter,
     setLength,
     setActiveBtn,
-    setOthersBtn
+    setOthersBtn,
+    setBtn,
+    setSearchParams,
+    setDisabledBtn
 } = dataSlice.actions
 
 export default dataSlice.reducer;

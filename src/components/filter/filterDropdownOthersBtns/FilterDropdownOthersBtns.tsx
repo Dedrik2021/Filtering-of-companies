@@ -1,6 +1,9 @@
 /* eslint-disable no-sequences */
 import { memo, FC } from 'react';
 
+import { useAppDispatch } from '../../../redux/store';
+import { setBtn } from '../../../redux/slices/firmsDataSlice';
+
 import './filterDropdownOthersBtns.scss';
 
 interface OthersDropdownBtnsProps {
@@ -9,7 +12,6 @@ interface OthersDropdownBtnsProps {
 	pscOthers: string[], 
 	btn: null | number,
 	onDropdownBtnClick: (psc: string) => void,
-	setBtn: (value: number | ((prevVar: null | number) => number)) => void;
 	setDisabledAllDataBtn: (value: boolean) => void;
 	dataOthersStatus: string
 }
@@ -21,10 +23,11 @@ const OthersDropdownBtns: FC<OthersDropdownBtnsProps> = memo((props) => {
 		pscOthers,
 		btn,
 		onDropdownBtnClick,
-		setBtn,
 		dataOthersStatus,
 		setDisabledAllDataBtn,
 	} = props;
+
+	const dispatch = useAppDispatch()
 
 	return (
 		<div className={`filter__box `}>
@@ -42,14 +45,14 @@ const OthersDropdownBtns: FC<OthersDropdownBtnsProps> = memo((props) => {
 						<li className="filter-dropdown-others-btns__item" key={i}>
 							<button
 								className={`filter-dropdown-others-btns__btn ${
-									Number(btn) === i ? 'active' : ''
+									btn === i ? 'active' : ''
 								}`}
 								style={{ backgroundColor: 'black' }}
 								onClick={() => (
 									onDropdownBtnClick(
 										psc[0] + psc[1] + psc[2] + psc[3] + psc[4] + psc[5],
 									),
-									setBtn(i),
+									dispatch(setBtn(i)),
 									setDisabledAllDataBtn(false)
 								)}
 								type="button"

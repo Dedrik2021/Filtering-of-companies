@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-operators */
 import {FC, memo} from 'react'
 
 import DataFirms from '../dataFirms/DataFirms';
@@ -12,7 +13,7 @@ interface FirmsItemsProps {
 }
 
 const FirmsItems: FC<FirmsItemsProps> = memo(({stylePsc}) => {
-	const { dataStatus, dataFilterStatus } = useAppSelector((state) => state.firmsData);
+	const { dataStatus, dataFilterStatus,dataOthersStatus } = useAppSelector((state) => state.firmsData);
 
 	const dataFirmsLoaded = () => {
 		if (dataStatus === 'success' && dataFilterStatus === 'success') {
@@ -23,7 +24,7 @@ const FirmsItems: FC<FirmsItemsProps> = memo(({stylePsc}) => {
 			dataFilterStatus === 'success'
 		) {
 			return <Spinner />;
-		} else if (dataStatus === 'error' && dataFilterStatus === 'error') {
+		} else if (dataStatus === 'error' && dataFilterStatus === 'error' && dataOthersStatus === 'error') {
 			return (
 				<img
 					src={dataFirmsError}

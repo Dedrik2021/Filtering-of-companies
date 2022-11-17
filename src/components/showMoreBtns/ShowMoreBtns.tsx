@@ -19,7 +19,7 @@ const ShowMoreBtns: FC<ShowMoreBtnsProps> = memo((props) => {
 				type="button"
 				onClick={handlePageClick}
 			>
-				{disabledBtn ? 'No More Items' : 'Add 25 Items'}
+				{disabledBtn ? 'No More Items' : 'Add 50 Items'}
 			</button>
 
 			<button

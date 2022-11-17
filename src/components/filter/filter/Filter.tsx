@@ -3,7 +3,13 @@ import { useEffect, useState, FC, memo } from 'react';
 import FilterDropdownBtns from '../filterDropdownBtns/FilterDropdownBtns';
 import FilterDropdownOthersBtns from '../filterDropdownOthersBtns/FilterDropdownOthersBtns';
 import { fetchData, fetchDataFilter } from '../../../redux/thunks/fetchThunk';
-import { setActiveBtn, setOthersBtn } from '../../../redux/slices/firmsDataSlice';
+import {
+	setActiveBtn,
+	setOthersBtn,
+	setBtn,
+	setSearchParams,
+	setDisabledBtn,
+} from '../../../redux/slices/firmsDataSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
 import { DataFirmsObj } from '../../../redux/slices/types';
 
@@ -11,30 +17,33 @@ import './filter.scss';
 
 export interface FilterProps {
 	stylePsc: (psc: string) => string;
-	setDisabledBtn: (value: boolean) => void;
 	setDisabledAllDataBtn: (value: boolean) => void;
-	disabledBtn: boolean;
 	disabledAllDataBtn: boolean;
 	dataOthersStatus: string;
+	updateSearchValue: (value: string) => void;
 }
 
 const Filter: FC<FilterProps> = memo((props) => {
 	const {
 		stylePsc,
-		setDisabledBtn,
 		setDisabledAllDataBtn,
-		disabledBtn,
 		disabledAllDataBtn,
 		dataOthersStatus,
+		updateSearchValue,
 	} = props;
 
 	const dispatch = useAppDispatch();
-	const [btn, setBtn] = useState<null | number>(null);
 	const [othersDataBtns, setOthersDataBtns] = useState<DataFirmsObj[]>([]);
-	const { dataFilterStatus, length, dataFilter, activeBtn, dataOthersBtns, othersBtn } =
-		useAppSelector(
-			(state) => state.firmsData,
-		);
+	const {
+		dataFilterStatus,
+		length,
+		dataFilter,
+		activeBtn,
+		dataOthersBtns,
+		othersBtn,
+		btn,
+		disabledBtn
+	} = useAppSelector((state) => state.firmsData);
 
 	useEffect(() => {
 		setOthersDataBtns(
@@ -44,9 +53,9 @@ const Filter: FC<FilterProps> = memo((props) => {
 
 	useEffect(() => {
 		if (disabledAllDataBtn) {
-			setBtn(null);
+			dispatch(setBtn(null));
 		}
-	}, [disabledAllDataBtn]);
+	}, [disabledAllDataBtn, dispatch]);
 
 	const numbrs = othersDataBtns && othersDataBtns.map((item) => item.psc).sort();
 	const uniNumbers = Array.from(new Set(numbrs));
@@ -64,7 +73,7 @@ const Filter: FC<FilterProps> = memo((props) => {
 		group: +num.toString()[1],
 	}));
 
-	const result: {group: number, numbers: { id: number; psc: string; }[]}[] = [];
+	const result: { group: number; numbers: { id: number; psc: string }[] }[] = [];
 	numbersWithGroups.forEach(({ number, group }) => {
 		const existingGroupIndex = result.findIndex((resultItem) => resultItem.group === group);
 		if (existingGroupIndex === -1) {
@@ -118,39 +127,50 @@ const Filter: FC<FilterProps> = memo((props) => {
 	];
 
 	const onFilterBtnClick = (psc: number) => {
-		dispatch(setActiveBtn(psc));
 		dispatch(fetchData({ length, psc: String(psc) }));
 		dispatch(fetchDataFilter({ length, psc: String(psc) }));
-		setDisabledBtn(true);
+		dispatch(setSearchParams(''));
 		setDisabledAllDataBtn(false);
 		dispatch(setOthersBtn(false));
-		setBtn(null);
-	};
+		
+		setTimeout(() => {
+			dispatch(setActiveBtn(psc));
+			dispatch(setBtn(null));
+			dispatch(setDisabledBtn(true));
+		}, 700)
+	};	
 
 	const onDropdownBtnClick = (psc: string) => {
 		dispatch(fetchData({ length, psc: psc }));
-		setDisabledBtn(true)
-		setBtn(Number(psc[1]));
+		dispatch(setDisabledBtn(true));
+		dispatch(setBtn(Number(psc[1])));
 	};
 
 	const onOthersBtnClick = () => {
-		setDisabledBtn(true);
-		dispatch(setOthersBtn(true));
-		dispatch(setActiveBtn(null));
+		updateSearchValue('');
+		dispatch(setSearchParams(''));
+		
+		setTimeout(() => {
+			dispatch(setActiveBtn(null));
+			dispatch(setOthersBtn(true));
+			dispatch(setDisabledBtn(true));
+		}, 700)
 	};
 
 	const onResetBtnClick = () => {
 		dispatch(setOthersBtn(false));
 		dispatch(setActiveBtn(null));
-		setBtn(null);
-		setDisabledBtn(false);
+		dispatch(setBtn(null));
+		dispatch(setDisabledBtn(false));
 		setDisabledAllDataBtn(false);
-		dispatch(fetchData({ length: 25, psc: '' }));
-		dispatch(fetchDataFilter({ length: 25, psc: '' }));
+		dispatch(fetchData({ length: 50, psc: '' }));
+		dispatch(fetchDataFilter({ length: 50, psc: '' }));
+		updateSearchValue('');
+		dispatch(setSearchParams(''));
 	};
 
 	return (
-		<div className="filter">
+		<div className={`filter`}>
 			<h3 className="filter__title">Filter: PSČ</h3>
 			<div
 				className={`filter__inner ${
@@ -179,7 +199,6 @@ const Filter: FC<FilterProps> = memo((props) => {
 									btn={btn}
 									onDropdownBtnClick={onDropdownBtnClick}
 									stylePsc={stylePsc}
-									setBtn={setBtn}
 									dataFilterStatus={dataFilterStatus}
 									result={result}
 									activeBtn={activeBtn}
@@ -194,7 +213,6 @@ const Filter: FC<FilterProps> = memo((props) => {
 					pscOthers={pscOthers}
 					btn={btn}
 					onDropdownBtnClick={onDropdownBtnClick}
-					setBtn={setBtn}
 					dataOthersStatus={dataOthersStatus}
 					setDisabledAllDataBtn={setDisabledAllDataBtn}
 				/>
@@ -210,6 +228,6 @@ const Filter: FC<FilterProps> = memo((props) => {
 			</div>
 		</div>
 	);
-})
+});
 
 export default Filter;

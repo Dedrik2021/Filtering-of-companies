@@ -1,0 +1,22 @@
+.search {
+    width: 100%;
+    background-color: red;
+    margin: 0 0 20px;
+    display: flex;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px;
+
+    &__title {
+        margin: 0 auto;
+        text-transform: uppercase;
+    }
+    
+    &__input {
+        max-width: 245px;
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid black;
+    }
+}

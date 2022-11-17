@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, FC, memo } from 'react';
 
 import { setData, setDataFilter, setLength } from '../../../redux/slices/firmsDataSlice';
@@ -33,7 +34,7 @@ const DataFirms: FC<DataFirmsProps> = memo((props) => {
 			),
 		);
 		dispatch(setLength(result[1]));
-	}, []);
+	}, [allDataFirms.winstrom, allDataFirmsFilter.winstrom, dispatch, result]);
 
 	const dataFirmsAvailable = () => {
 		if (dataFirms.length !== 0) {
@@ -91,7 +92,7 @@ const DataFirms: FC<DataFirmsProps> = memo((props) => {
 					style={{
 						color: 'red',
 						textAlign: 'center',
-						width: '1100px',
+						width: '1065px',
 						fontSize: '50px',
 						padding: '345px 0',
 						backgroundColor: '#ccc',

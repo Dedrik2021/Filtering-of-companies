@@ -1,4 +1,4 @@
-import {FC, memo} from 'react'
+import { FC, memo } from 'react';
 
 import Filter from '../../filter/filter/Filter';
 import FirmsItems from '../firmsItems/FirmsItems';
@@ -6,14 +6,17 @@ import FirmsItems from '../firmsItems/FirmsItems';
 import './firmsList.scss';
 
 interface FirmsListProps {
-	setDisabledBtn: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 	setDisabledAllDataBtn: (value: boolean | ((prevVar: boolean) => boolean)) => void;
-	disabledBtn: boolean,
-	disabledAllDataBtn: boolean
+	disabledAllDataBtn: boolean;
+	updateSearchValue: (value: string) => void
 }
 
 const FirmsList: FC<FirmsListProps> = memo((props) => {
-	const { setDisabledBtn, setDisabledAllDataBtn, disabledBtn, disabledAllDataBtn } = props;
+	const {
+		setDisabledAllDataBtn,
+		disabledAllDataBtn,
+		updateSearchValue,
+	} = props;
 
 	const stylePsc = (psc: string) => {
 		switch (psc) {
@@ -46,14 +49,14 @@ const FirmsList: FC<FirmsListProps> = memo((props) => {
 		<section className="firms">
 			<Filter
 				stylePsc={stylePsc}
-				setDisabledBtn={setDisabledBtn}
 				setDisabledAllDataBtn={setDisabledAllDataBtn}
-				disabledBtn={disabledBtn}
 				disabledAllDataBtn={disabledAllDataBtn}
-				dataOthersStatus={''}			/>
+				dataOthersStatus={''}
+				updateSearchValue={updateSearchValue}
+			/>
 			<FirmsItems stylePsc={stylePsc} />
 		</section>
 	);
-})
+});
 
 export default FirmsList;

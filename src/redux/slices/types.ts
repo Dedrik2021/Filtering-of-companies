@@ -23,5 +23,8 @@ export interface InitialState {
     othersBtn: boolean,
     dataStatus: string,
     dataFilterStatus: string,
-    dataOthersStatus: string
+    dataOthersStatus: string,
+    btn: null | number,
+    searchParams: string,
+    disabledBtn: boolean
 }
