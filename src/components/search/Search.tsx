@@ -17,6 +17,7 @@ const Search: FC<SearchProps> = memo(({searchParams, onChangeInput}) => {
 				value={String(searchParams)}
 				onChange={(e) => onChangeInput(e)}
 				id="search"
+				maxLength={5}
 				name='search-input'
 				placeholder='Search for PSC'
 				/>
