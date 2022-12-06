@@ -2,7 +2,6 @@ import { FC, memo } from 'react';
 
 import Filter from '../../filter/filter/Filter';
 import FirmsItems from '../firmsItems/FirmsItems';
-import { Status } from '../../../enums/status';
 
 import './firmsList.scss';
 
@@ -52,7 +51,7 @@ const FirmsList: FC<FirmsListProps> = memo((props) => {
 				stylePsc={stylePsc}
 				setDisabledAllDataBtn={setDisabledAllDataBtn}
 				disabledAllDataBtn={disabledAllDataBtn}
-				dataOthersStatus={Status.LOADING}
+				dataOthersStatus={''}
 				updateSearchValue={updateSearchValue}
 			/>
 			<FirmsItems stylePsc={stylePsc} />
