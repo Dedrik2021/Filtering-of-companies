@@ -3,6 +3,7 @@ import { memo, FC } from "react";
 
 import { useAppDispatch } from "../../../redux/store";
 import { setBtn } from "../../../redux/slices/firmsDataSlice";
+import { Status } from "../../../enums/status";
 
 import './filterDropdownBtns.scss'
 
@@ -40,7 +41,7 @@ const DropdownBtns: FC<FilterDropdownProps> = memo((props) => {
                                     onClick={() => (onDropdownBtnClick(psc[0] + psc[1] + psc[2]), dispatch(setBtn(id)))}
                                     style={{ backgroundColor: stylePsc(psc[1]) }} 
                                     type="button" key={id}>
-                                    {dataFilterStatus === 'loading' ? 'xxx xx' : psc}
+                                    {dataFilterStatus === Status.LOADING ? 'xxx xx' : psc}
                                 </button>
                             )
                         })}

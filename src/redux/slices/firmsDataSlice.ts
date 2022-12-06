@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { Status } from '../../enums/status'
+
 import { 
     fetchData, 
     fetchDataFilter, 
@@ -7,7 +9,8 @@ import {
     fetchDataOthers 
 } from '../thunks/fetchThunk';
 
-import { InitialState, DataFirmsObj, Status } from './types';
+import { DataFirmsObj } from './types';
+import { InitialState } from './interfaces';
 
 const initialState: InitialState = {
     dataFirms: [],

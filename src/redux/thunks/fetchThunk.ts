@@ -9,13 +9,13 @@ export const fetchData = createAsyncThunk('fetchData/fetchDataStatus', async (pa
 			`https://demo.flexibee.eu/v2/c/demo/adresar/(psc%20begins%20%27${psc}%27).json?limit=${length}&start=0`,
 		);
 		return await response.json();
-	} catch(err) {
-		console.log(`Problem is - ${err}`);
+	} catch(error) {
+		console.log(`Problem is - ${error}`);
 	}
 });
 
 export const fetchDataFilter = createAsyncThunk(
-	'fetchDataFilter/fetchDataStatus',
+	'fetchDataFilter/dataFilterStatus',
 	async (params: Params) => {
 		const { length, psc } = params;
 		try {
@@ -23,14 +23,15 @@ export const fetchDataFilter = createAsyncThunk(
 				`https://demo.flexibee.eu/v2/c/demo/adresar/(psc%20begins%20%27${psc}%27).json?limit=${length}&start=0`,
 			);
 			return await response.json();
-		} catch(err) {
-			console.log(`Problem is - ${err}`);
+
+		} catch(error) {
+			console.log(`Problem is - ${error}`);
 		}
 	},
 );
 
 export const fetchDataOthers = createAsyncThunk(
-	'fetchDataOthers/fetchDataStatus',
+	'fetchDataOthers/dataOthersStatus',
 	async (params: ParamsLength) => {
 		const { length } = params;
 		try {
@@ -38,19 +39,19 @@ export const fetchDataOthers = createAsyncThunk(
 				`https://demo.flexibee.eu/v2/c/demo/adresar.json?limit=${length}&start=0`,
 			);
 			return await response.json();
-		} catch(err) {
-			console.log(`Problem is - ${err}`);
+		} catch(error) {
+			console.log(`Problem is - ${error}`);
 		}
 	},
 );
 
-export const fetchDataLength = createAsyncThunk('fetchDataLength/fetchDataStatus', async () => {
+export const fetchDataLength = createAsyncThunk('fetchDataLength/dataLengthStatus', async () => {
 	try {
 		const response = await fetch(
 			`https://demo.flexibee.eu/v2/c/demo/adresar.json?add-row-count=true`,
 		);
 		return await response.json();
-	} catch(err) {
-		console.log(`Problem is - ${err}`);
+	} catch(error) {
+		console.log(`Problem is - ${error}`);
 	}
 });

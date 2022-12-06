@@ -5,6 +5,7 @@ import DataFirms from '../dataFirms/DataFirms';
 import Spinner from '../../../spinner/Spinner';
 import dataFirmsError from '../../../assets/images/data-error.webp'
 import { useAppSelector } from '../../../redux/store';
+import { Status } from '../../../enums/status';
 
 import './firmsItems.scss'
 
@@ -16,15 +17,15 @@ const FirmsItems: FC<FirmsItemsProps> = memo(({stylePsc}) => {
 	const { dataStatus, dataFilterStatus,dataOthersStatus } = useAppSelector((state) => state.firmsData);
 
 	const dataFirmsLoaded = () => {
-		if (dataStatus === 'success' && dataFilterStatus === 'success') {
+		if (dataStatus === Status.SUCCESS && dataFilterStatus === Status.SUCCESS) {
 			return <DataFirms stylePsc={stylePsc}/>
 		} else if (
-			(dataStatus === 'loading' && dataFilterStatus === 'loading') ||
-			dataStatus === 'success' ||
-			dataFilterStatus === 'success'
+			(dataStatus === Status.LOADING && dataFilterStatus === Status.LOADING) ||
+			dataStatus === Status.SUCCESS ||
+			dataFilterStatus === Status.SUCCESS
 		) {
 			return <Spinner />;
-		} else if (dataStatus === 'error' && dataFilterStatus === 'error' && dataOthersStatus === 'error') {
+		} else if (dataStatus === Status.ERROR && dataFilterStatus === Status.ERROR && dataOthersStatus === Status.ERROR) {
 			return (
 				<img
 					src={dataFirmsError}

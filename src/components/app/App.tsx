@@ -6,6 +6,7 @@ import debounce from 'lodash.debounce';
 import FirmsList from '../firms/firmsList/FirmsList';
 import Search from '../search/Search';
 import ShowMoreBtns from '../showMoreBtns/ShowMoreBtns';
+import { Status } from '../../enums/status';
 import {
 	fetchData,
 	fetchDataFilter,
@@ -62,7 +63,6 @@ const App: FC = () => {
 		setDisabledAllDataBtn(true);
 		dispatch(setActiveBtn(null));
 		dispatch(setOthersBtn(false));
-		window.scrollTo(0, 0);
 		dispatch(setSearchParams(''))
 	};
 
@@ -102,7 +102,7 @@ const App: FC = () => {
 	);
 
 	const dataLoaded = () => {
-		if (dataStatus === 'success') {
+		if (dataStatus === Status.SUCCESS) {
 			return (
 				isNaN(length) && (
 					<h3

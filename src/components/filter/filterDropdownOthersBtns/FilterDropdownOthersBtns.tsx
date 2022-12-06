@@ -3,6 +3,7 @@ import { memo, FC } from 'react';
 
 import { useAppDispatch } from '../../../redux/store';
 import { setBtn } from '../../../redux/slices/firmsDataSlice';
+import { Status } from '../../../enums/status';
 
 import './filterDropdownOthersBtns.scss';
 
@@ -57,7 +58,7 @@ const OthersDropdownBtns: FC<OthersDropdownBtnsProps> = memo((props) => {
 								)}
 								type="button"
 							>
-								{dataOthersStatus === 'loading' ? 'xx xx xx' : psc}
+								{dataOthersStatus === Status.LOADING ? 'xx xx xx' : psc}
 							</button>
 						</li>
 					);
